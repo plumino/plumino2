@@ -2,7 +2,8 @@ PLUMINO_VERSION = {0, 0, 3}
 
 modeNames = {
     "marathon",
-    "sprint"
+    "sprint",
+    "ionlysprint"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
@@ -11,11 +12,17 @@ rotationSystems = {
     "srs",
     "flashlight"
 }
+-- EDIT THIS TABLE TO LOAD ROTATION SYSTEMS.
+
+randomisers = {
+    "tgm",
+    "onlyi"
+}
+-- EDIT THIS TABLE TO LOAD RANDOMISERS.
 
 piece = {}
 
 require "util"
-require "stuff/randomiser"
 inspect = require "lib/inspect"
 require "game"
 require "stuff/ui"
@@ -44,6 +51,7 @@ game.bgm = {
 
 modes = {}
 rotations = {}
+randomiser = {}
 
 game.sfx = {
     ready = "ready.wav",
@@ -80,6 +88,10 @@ function love.load()
 
     for _, i in pairs(rotationSystems) do -- handle rotsys loading
         require("./rotsys/"..i)
+    end
+
+    for _, i in pairs(randomisers) do -- handle randomiser loading
+        require("./randomiser/"..i)
     end
 
     for p, f in pairs(game.gfx) do -- handle gfx loading

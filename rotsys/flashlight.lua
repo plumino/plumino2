@@ -4,7 +4,8 @@ rotations.FLASHLIGHT = {
     name = "Flashlight Rotation System",
     alwayswallkick = true,
     banana = 0,
-    bananastate = 0
+    bananastate = 0,
+    preferredRandom = "TGM"
 }
 
 rotations.FLASHLIGHT.structure = {

@@ -1,11 +1,11 @@
-random = {}
+randomiser.TGM = {}
 
-function random:init()
+function randomiser.TGM:init()
     self.firstPiece = true
     self.history = {"Z", "Z", "S", "S"}
 end
 
-function random:next()
+function randomiser.TGM:next()
     -- TGM randomiser
     local rng = love.math.newRandomGenerator(os.time())
     local pieces = {"I", "J", "L", "S", "T", "O", "Z"}

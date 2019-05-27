@@ -2,7 +2,8 @@ local BLANK = {0, 0, 0, 0}
 
 rotations.SRS = {
     name = "Super Rotation System",
-    alwayswallkick = true
+    alwayswallkick = true,
+    preferredRandom = "TGM"
 }
 
 rotations.SRS.structure = {

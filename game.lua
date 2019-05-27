@@ -58,7 +58,11 @@ function game:init(rotation, options)
 
     self.rotsys = rotation
 
-    random:init()
+    self.random = randomiser[self.mode.preferredRandom] or randomiser[rotations[rotation].preferredRandom] or "TGM"
+
+    if self.random.init then
+        self.random:init()
+    end
 
     self.speeds = {
         gravity = 1/64, -- 1/64th of a G
@@ -98,7 +102,7 @@ function game:init(rotation, options)
     self.sections = {}
 
     self.piece = nil
-    self.nextPiece = random:next()
+    self.nextPiece = self.random:next()
 
     self.lockdelay = self.speeds.lockDelay
     self.are = 0
@@ -251,7 +255,7 @@ function game:next()
     if self.are > 0 then return end
 
     self.piece = self:buildPiece(self.nextPiece)
-    self.nextPiece = random:next()
+    self.nextPiece = self.random:next()
 
     local n = self.piece.name
 
