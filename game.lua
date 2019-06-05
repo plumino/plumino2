@@ -125,6 +125,8 @@ function game:init(rotation, options)
     self.stats.targetlevel = 100
     self.stats.endlevel = options.endlevel or 999
     self.stats.lines = 0
+    self.stats.pieces = 0
+    self.stats.pieceLocks = 0
 
     self:next()
     self.hasRanInit = true
@@ -277,6 +279,7 @@ function game:next()
     end
 
     self.piece.active = true
+    self.stats.pieces = self.stats.pieces + 1
 end
 
 function game:doRotation(b1, b2, isARE)
@@ -387,6 +390,7 @@ function game:lockPiece()
     if self.mode.linesCleared then
         self.mode:linesCleared(lines)
     end
+    self.stats.pieceLocks = self.stats.pieceLocks + 1
     return lines
 end
 

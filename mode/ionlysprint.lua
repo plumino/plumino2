@@ -28,5 +28,8 @@ modes.ionlysprint = {
 
         ui.drawScoreText("Lines", 3)
         ui.drawScoreText(tostring(self.endcount - game.stats.lines), 4)
+    end,
+    getPresenceText = function(self)
+        return tostring(game.stats.pieceLocks) .. " blocks dropped"
     end
 }

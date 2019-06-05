@@ -33,5 +33,8 @@ modes.marathon = {
 
         ui.drawScoreText("Score", 8)
         ui.drawScoreText(tostring(game.stats.score), 9)
+    end,
+    getPresenceText = function(self)
+        return tostring(game.stats.pieceLocks) .. " blocks dropped"
     end
 }

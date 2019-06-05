@@ -142,6 +142,10 @@ function love.update(dt)
         game.state:update(dt)
     end
 
+    if game.mode and game.mode.getPresenceText then
+        presence.largeImageText = game.mode:getPresenceText()
+    end
+
     if nextPresence < love.timer.getTime() then
         discord.updatePresence(presence)
         nextPresence = love.timer.getTime() + 2.0

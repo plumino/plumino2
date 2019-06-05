@@ -26,5 +26,8 @@ modes.sprint = {
 
         ui.drawScoreText("Lines", 2)
         ui.drawScoreText(tostring(self.endcount - game.stats.lines), 3)
+    end,
+    getPresenceText = function(self)
+        return tostring(game.stats.pieceLocks) .. " blocks dropped"
     end
 }

@@ -78,11 +78,13 @@ game.states.game = {
                     game.timeStart = love.timer.getTime()
                     game.willTrackTime = true
                     local now = os.time(os.date("*t"))
-                    updatePresence {
+                    local pt = {
                         details = modes[self.rpArg[1]].name,
                         state = rotations[self.rpArg[2]].name,
-                        startTimestamp = now
+                        startTimestamp = now,
+                        largeImageKey = "logo"
                     }
+                    updatePresence(pt)
                     self:playBGM(game.bgm[1])
                 elseif self.readyGoStage == 2 then
                     self.readyGoText = "GO"
