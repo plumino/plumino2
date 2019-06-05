@@ -2,6 +2,10 @@ require "lib/inspect"
 
 game.states.menu = {
     init = function(self)
+        updatePresence {
+            state = "In the menu"
+        }
+
         self.menuindex = 1
         self.menustate = 0 -- 0: selecting gamemode, 1: selecting rot
         local a = {}

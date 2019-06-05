@@ -4,6 +4,8 @@ game.states.game = {
     init = function(self, arg)
         game:loadMode(arg[1], arg[2])
 
+        self.rpArg = arg
+
         -- READY. GO.
         self.readyGoText = "READY"
         self.readyGoCountdown = 0
@@ -75,6 +77,12 @@ game.states.game = {
                     self.drawingReadyGo = false
                     game.timeStart = love.timer.getTime()
                     game.willTrackTime = true
+                    local now = os.time(os.date("*t"))
+                    updatePresence {
+                        details = modes[self.rpArg[1]].name,
+                        state = rotations[self.rpArg[2]].name,
+                        startTimestamp = now
+                    }
                     self:playBGM(game.bgm[1])
                 elseif self.readyGoStage == 2 then
                     self.readyGoText = "GO"

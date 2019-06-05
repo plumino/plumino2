@@ -27,6 +27,16 @@ inspect = require "lib/inspect"
 require "game"
 require "stuff/ui"
 
+discord = require "lib/discordRPC"
+local presence = {}
+
+function updatePresence(p)
+    presence = p
+    nextPresence = 0
+end
+
+local nextPresence = 0
+
 game.font = {
     big = love.graphics.newFont("assets/font/standard.ttf", 36),
     std = love.graphics.newFont("assets/font/standard.ttf", 14),
@@ -78,6 +88,8 @@ local files = {
 }
 
 function love.load()
+    discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
+
     for _, i in pairs(files) do -- handle state loading
         require("./states/"..i)
     end
@@ -122,6 +134,20 @@ function love.update(dt)
     if game.state and game.state.update then
         game.state:update(dt)
     end
+
+    if nextPresence < love.timer.getTime() then
+        discord.updatePresence(presence)
+        nextPresence = love.timer.getTime() + 2.0
+    end
+    discord.runCallbacks()
+end
+
+function love.quit()
+    discord.shutdown()
+end
+
+function discord.ready(uid, uname, discrim, avy)
+    print(string.format("[Discord RPC] Ready! Logged in as %s#%s (%s).", uname, discrim, uid))
 end
 
 function love.draw()

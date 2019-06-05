@@ -9,6 +9,9 @@ function game:loadMode(name, rotation)
     if not modes[name] then
         error("Mode "..name.." does not exist! This should never ever happen!")
     end
+    if not rotations[rotation] then
+        error("Rotation "..rotation.." does not exist! This should never ever happen!")
+    end
     self.mode = modes[name]
     self:init(rotation, {})
     self.mode:init()
