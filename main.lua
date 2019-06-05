@@ -27,7 +27,14 @@ inspect = require "lib/inspect"
 require "game"
 require "stuff/ui"
 
-discord = require "lib/discordRPC"
+local libstatus, liberr = pcall(function() discord = require "lib/discordRPC" end)
+
+if libstatus then
+    discord = require "lib/discordRPC"
+else
+    print("[WARNING!] Could not load Discord rich presence: "..liberr)
+    print("[WARNING!] This is normal if using the .love file.")
+end
 local presence = {}
 
 function updatePresence(p)
