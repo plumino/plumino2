@@ -209,11 +209,19 @@ end
 function game:buildPiece(pc)
     local t = {}
     t.active = true
-    t.type = rotations[self.rotsys].structure[pc]
+    t.type = self:getPiece(pc)
     t.colour = rotations[self.rotsys].colours[pc]
     t.name = pc
     t.state = 1
     return t
+end
+
+function game:getPiece(name)
+    if rotations[self.rotsys].getPieceStructure then
+        return rotations[self.rotsys]:getPieceStructure(name)
+    else
+        return rotations[self.rotsys].structure[name]
+    end
 end
 
 function game:doARE()

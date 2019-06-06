@@ -10,7 +10,8 @@ modeNames = {
 rotationSystems = {
     "ars",
     "srs",
-    "flashlight"
+    "flashlight",
+    "incremental"
 }
 -- EDIT THIS TABLE TO LOAD ROTATION SYSTEMS.
 
