@@ -10,7 +10,7 @@ rotations.INCREMENTAL = {
 
     -- Incremental stuff below
     order = 5,
-    pseudo = false
+    pseudo = true
 }
 
 local inspect = require("lib/inspect")
@@ -55,6 +55,9 @@ function rotations.INCREMENTAL:getPieceStructure(_)
     local i = 0
     while true do
         local d = love.math.random(1, 4)
+        if self.pseudo then
+            d = love.math.random(1, 8)
+        end
         if d == 1 then -- left
             ax = ax - 1
         elseif d == 2 then -- right
@@ -63,6 +66,14 @@ function rotations.INCREMENTAL:getPieceStructure(_)
             ay = ay - 1
         elseif d == 4 then -- up
             ay = ay + 1
+        elseif d == 5 then -- up-right
+            ax, ay = ax+1, ay-1
+        elseif d == 6 then -- up-left
+            ax, ay = ax-1, ay-1
+        elseif d == 7 then -- down-right
+            ax, ay = ax+1, ay+1
+        elseif d == 8 then -- down-left
+            ax, ay = ax-1, ay+1
         end
         if ax < 1 then
             ax = 1
