@@ -88,5 +88,8 @@ game.states.menu = {
                 self.menustate = 0
             end
         end
+        if game.keys.c then
+            game:switchState("splash")
+        end
     end
 }

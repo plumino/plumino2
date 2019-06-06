@@ -54,9 +54,11 @@ game.font = {
 }
 
 game.gfx = {
-    intro = "intro.png",
+    intro = "arikek.png",
     title = "title.png",
-    mino = "mino16.png"
+    mino = "mino16.png",
+    dev = "dev.png",
+    poweredby = "poweredby.png"
 }
 
 game.background = {
@@ -92,7 +94,8 @@ end
 
 local files = {
     "game",
-    "menu"
+    "menu",
+    "splash"
 }
 
 function love.load()
@@ -133,7 +136,7 @@ function love.load()
         end
     end
 
-    game:switchState("menu")
+    game:switchState("splash")
 end
 
 function love.update(dt)
@@ -168,6 +171,7 @@ function love.draw()
     end
 
     love.graphics.setFont(game.font.med)
+    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()).." FPS", 0, 0)
 end
 
