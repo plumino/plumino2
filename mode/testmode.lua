@@ -18,7 +18,7 @@ return {
         self.sx, self.sy, self.sm = love.window.getPosition()
     end,
     stop = function(self)
-        self.thread:kill()
+
     end,
     linesCleared = function(self, lines)
         if lines > 0 then
