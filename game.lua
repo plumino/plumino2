@@ -98,6 +98,16 @@ function game:init(rotation, options)
         end
     end
 
+    self.xOffset = {}
+    for x=1,#self.matrix[1],1 do
+        self.xOffset[x] = 0
+    end
+
+    self.yOffset = {}
+    for x=1,#self.matrix[1],1 do
+        self.yOffset[x] = 0
+    end
+
     self.piecex=0
     self.piecey=0
 
@@ -158,6 +168,10 @@ function game:update()
 
     if rotations[self.rotsys].update then
         rotations[self.rotsys]:update()
+    end
+
+    if self.mode.update then
+        self.mode:update()
     end
 end
 

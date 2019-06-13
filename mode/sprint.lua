@@ -1,4 +1,4 @@
-modes.sprint = {
+return {
     name = "Sprint",
     init = function(self)
         game.speeds = {

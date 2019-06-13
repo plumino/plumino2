@@ -3,7 +3,9 @@ PLUMINO_VERSION = {0, 0, 3}
 modeNames = {
     "marathon",
     "sprint",
-    "ionlysprint"
+    "ionlysprint",
+    "sinemarathon",
+    "testmode"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
@@ -79,15 +81,28 @@ game.sfx = {
     credit = "credit.wav"
 }
 
+screen = love.graphics.newCanvas() -- testing this
+screenX = 0
+screenY = 0
+screenCol = {1, 1, 1, 1}
+
 function game:switchState(name, args)
     if not game.states[name] then
         error("Could not switch to state "..name)
+    end
+    if game.state and game.state.stop then
+        game.state:stop()
     end
     game.stateName = name
     game.state = game.states[name]
     if game.state.init then
         game.state:init(args)
     end
+
+    -- RESET THE SCREEN VARIABLES
+    screenX = 0
+    screenY = 0
+    screenCol = {1, 1, 1, 1}
 
     love.window.setTitle("Plumino 2: "..name)
 end
@@ -106,7 +121,7 @@ function love.load()
     end
 
     for _, i in pairs(modeNames) do -- handle mode loading
-        require("./mode/"..i)
+        modes[i] = require("./mode/"..i)
     end
 
     for _, i in pairs(rotationSystems) do -- handle rotsys loading
@@ -166,6 +181,10 @@ function discord.ready(uid, uname, discrim, avy)
 end
 
 function love.draw()
+    love.graphics.setCanvas(screen)
+    love.graphics.clear()
+    love.graphics.setBlendMode("alpha")
+
     if game.state and game.state.draw then
         game.state:draw()
     end
@@ -173,6 +192,11 @@ function love.draw()
     love.graphics.setFont(game.font.med)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()).." FPS", 0, 0)
+
+    love.graphics.setCanvas()
+    love.graphics.setColor(unpack(screenCol))
+    love.graphics.setBlendMode("alpha", "premultiplied")
+    love.graphics.draw(screen, screenX, screenY)
 end
 
 function love.keypressed(k, sc, r)

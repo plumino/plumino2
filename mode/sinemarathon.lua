@@ -1,5 +1,5 @@
 return {
-    name = "Marathon",
+    name = "math.sin()-athon",
     init = function(self)
         self.level = 0
 
@@ -20,6 +20,11 @@ return {
             if game.stats.lines >= (self.level+1) * 10 then
                 self.level = self.level + 1
             end
+        end
+    end,
+    update = function(self)
+        for i=1,10,1 do
+            game.yOffset[i] = math.sin(i+love.timer.getTime()) * 30
         end
     end,
     draw = function(self)

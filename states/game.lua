@@ -149,7 +149,7 @@ game.states.game = {
                         else
                             love.graphics.setColor(1, 1, 1, 0)
                         end
-                        love.graphics.draw(game.gfx.mino, (CENTER_X-minoDim)+((x)*minoDim), ((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))
+                        love.graphics.draw(game.gfx.mino, ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
                     end
                 end
             end
@@ -196,5 +196,8 @@ game.states.game = {
             local h = game.font.med2:getHeight(self.readyGoText)
             love.graphics.print(self.readyGoText, (800/2)-(w/2), (600/2)-(h/2))
         end
+    end,
+    stop = function(self)
+        if game.mode.stop then game.mode:stop() end
     end
 }

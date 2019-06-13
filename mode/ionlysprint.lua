@@ -1,4 +1,4 @@
-modes.ionlysprint = {
+return {
     name = "I-Only Sprint",
     preferredRandom = "ONLYI",
     init = function(self)
