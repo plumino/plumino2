@@ -1,4 +1,4 @@
-game.states.splash = {
+return {
     init = function(self)
         self.stuff = {
             game.gfx.dev,
@@ -24,7 +24,7 @@ game.states.splash = {
             self.progress = self.progress + 1
         end
         if self.progress > #self.stuff then
-            game:switchState("menu")
+            game:switchState("title")
         end
     end,
     draw = function(self)

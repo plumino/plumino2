@@ -1,6 +1,6 @@
 local inspect = require "lib/inspect"
 
-game.states.game = {
+return {
     init = function(self, arg)
         game:loadMode(arg[1], arg[2])
 

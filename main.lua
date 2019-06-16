@@ -60,7 +60,8 @@ game.gfx = {
     title = "title.png",
     mino = "mino16.png",
     dev = "dev.png",
-    poweredby = "poweredby.png"
+    poweredby = "poweredby.png",
+    logo = "logo.png"
 }
 
 game.background = {
@@ -110,7 +111,8 @@ end
 local files = {
     "game",
     "menu",
-    "splash"
+    "splash",
+    "title"
 }
 
 function love.load()
@@ -119,7 +121,7 @@ function love.load()
     end
 
     for _, i in pairs(files) do -- handle state loading
-        require("./states/"..i)
+        game.states[i] = require("./states/"..i)
     end
 
     for _, i in pairs(modeNames) do -- handle mode loading

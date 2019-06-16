@@ -33,6 +33,23 @@ game.keyMap = {
     debug = "j"
 }
 
+game.prettyKeys = {
+    rshift = "Right SHIFT",
+    lshift = "Left SHIFT",
+    lctrl = "Left CONTROL",
+    rctrl = "Right CONTROL"
+}
+
+game.prettyKeys["return"] = "ENTER"
+
+function game:prettyKey(a)
+    if self.prettyKeys[a] then
+        return self.prettyKeys[a]
+    else
+        return string.upper(a)
+    end
+end
+
 game.keys = {
     up = false,
     down = false,

@@ -1,6 +1,6 @@
 require "lib/inspect"
 
-game.states.menu = {
+return {
     init = function(self)
         updatePresence {
             state = "In the menu"
