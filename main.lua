@@ -87,6 +87,9 @@ screenX = 0
 screenY = 0
 screenCol = {1, 1, 1, 1}
 
+window = {}
+window.w, window.h, window.mode = love.window.getMode()
+
 function game:switchState(name, args)
     if not game.states[name] then
         error("Could not switch to state "..name)
@@ -112,7 +115,8 @@ local files = {
     "game",
     "menu",
     "splash",
-    "title"
+    "title",
+    "credits"
 }
 
 function love.load()
