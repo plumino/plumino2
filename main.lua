@@ -114,7 +114,9 @@ local files = {
 }
 
 function love.load()
-    discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
+    if discord then
+        discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
+    end
 
     for _, i in pairs(files) do -- handle state loading
         require("./states/"..i)
@@ -161,23 +163,29 @@ function love.update(dt)
         game.state:update(dt)
     end
 
-    if game.mode and game.mode.getPresenceText then
-        presence.largeImageText = game.mode:getPresenceText()
-    end
+    if discord then
+        if game.mode and game.mode.getPresenceText then
+            presence.largeImageText = game.mode:getPresenceText()
+        end
 
-    if nextPresence < love.timer.getTime() then
-        discord.updatePresence(presence)
-        nextPresence = love.timer.getTime() + 2.0
+        if nextPresence < love.timer.getTime() then
+            discord.updatePresence(presence)
+            nextPresence = love.timer.getTime() + 2.0
+        end
+        discord.runCallbacks()
     end
-    discord.runCallbacks()
 end
 
 function love.quit()
-    discord.shutdown()
+    if discord then
+        discord.shutdown()
+    end
 end
 
-function discord.ready(uid, uname, discrim, avy)
-    print(string.format("[Discord RPC] Ready! Logged in as %s#%s (%s).", uname, discrim, uid))
+if discord then
+    function discord.ready(uid, uname, discrim, avy)
+        print(string.format("[Discord RPC] Ready! Logged in as %s#%s (%s).", uname, discrim, uid))
+    end
 end
 
 function love.draw()

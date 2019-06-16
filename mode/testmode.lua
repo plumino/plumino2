@@ -13,12 +13,13 @@ return {
 
         game.movereset = true
 
-        screenCol = {1, 0, 0, 1}
-
         self.sx, self.sy, self.sm = love.window.getPosition()
+        self.stopping = false
     end,
     stop = function(self)
-
+        self.stopping = true
+        love.window.setPosition(self.sx, self.sy, self.sm)
+        screenX, screenY = 0
     end,
     linesCleared = function(self, lines)
         if lines > 0 then
@@ -30,9 +31,11 @@ return {
         end
     end,
     update = function(self)
+        if self.stopping then return end
         local rand, rand2 = love.math.random(), love.math.random()
-        local val = 100
-        local fx, fy = math.sin(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
+        local val = 200
+        --local fx, fy = math.sin(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
+        local fx, fy = 1/math.cos(love.timer.getTime())*val, 0
         local a = {self.sx+fx, self.sy+fy}
         if a then
             love.window.setPosition(unpack(a))
