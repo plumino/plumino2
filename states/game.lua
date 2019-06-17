@@ -82,7 +82,7 @@ return {
                         details = modes[self.rpArg[1]].name,
                         state = rotations[self.rpArg[2]].name,
                         startTimestamp = now,
-                        largeImageKey = "logo"
+                        largeImageKey = "gameplay"
                     }
                     updatePresence(pt)
                     self:playBGM(game.bgm[1])

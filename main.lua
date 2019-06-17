@@ -108,7 +108,7 @@ function game:switchState(name, args)
     screenY = 0
     screenCol = {1, 1, 1, 1}
 
-    love.window.setTitle("Plumino 2: "..name)
+    love.window.setTitle("Plumino²: "..name)
 end
 
 local files = {

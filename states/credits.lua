@@ -1,7 +1,7 @@
 return {
     init = function(self)
         self.credits = [[[ DEVELOPMENT ]
-ry00001 - Code
+ry00001 & LewisTehMinerz - Code
 Oshisaure - Technical help
 #spyros-dev-lag - Technical help
 
@@ -19,7 +19,7 @@ Everyone who has playtested
 And you
 
 Powered by Love2D
-(C) ry00001, 2019]]
+(C) Plumino Team, 2019]]
 
         self.font = game.font.med
         self.x = window.h+20

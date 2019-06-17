@@ -3,6 +3,7 @@ require "lib/inspect"
 return {
     init = function(self)
         updatePresence {
+            largeImageKey = "logo",
             state = "In the menu"
         }
 
