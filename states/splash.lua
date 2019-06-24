@@ -23,7 +23,7 @@ return {
             self.state = 0
             self.progress = self.progress + 1
         end
-        if self.progress > #self.stuff then
+        if self.progress > #self.stuff or game.justPressed.start then
             game:switchState("title")
         end
     end,

@@ -137,20 +137,18 @@ return {
             for y, j in ipairs(game.rendermatrix) do
                 for x, d in ipairs(j) do
                     if d ~= false then
-                        if y > game.invisrows then
-                            local colour = rotations[game.rotsys].colours[d] or {1, 1, 1, 1}
-                            if rotations[game.rotsys].getPieceColour then
-                                colour = rotations[game.rotsys]:getPieceColour(x, y, d)
-                            end
-                            if game.mode.getPieceColour then
-                                colour = game.mode:getPieceColour(x, y, d)
-                            end
-                            love.graphics.setColor(unpack(colour))
-                        else
-                            love.graphics.setColor(1, 1, 1, 0)
+                        local colour = rotations[game.rotsys].colours[d] or {1, 1, 1, 1}
+                        if rotations[game.rotsys].getPieceColour then
+                            colour = rotations[game.rotsys]:getPieceColour(x, y, d)
                         end
-                        love.graphics.draw(game.gfx.mino, ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
+                        if game.mode.getPieceColour then
+                            colour = game.mode:getPieceColour(x, y, d)
+                        end
+                        love.graphics.setColor(unpack(colour))
+                    else
+                        love.graphics.setColor(1, 1, 1, 0)
                     end
+                    love.graphics.draw(game.gfx.mino, ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
                 end
             end
 
@@ -160,7 +158,7 @@ return {
                     for x = 1, #h, 1 do
                         if rotations[game.rotsys].structure[game.nextPiece][1][y][x] == 1 then
                             love.graphics.setColor(unpack(rotations[game.rotsys].colours[game.nextPiece] or {1, 1, 1, 1}))
-                            love.graphics.draw(game.gfx.mino, (800/2-40)+((x)*minoDim), ((600-ty-210)-minoDim)+((y)*minoDim))
+                            love.graphics.draw(game.gfx.mino, (800/2-40)+((x)*minoDim), ((600-ty-220)-minoDim)+((y)*minoDim))
                         end
                     end
                 end

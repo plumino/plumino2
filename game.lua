@@ -28,9 +28,7 @@ game.keyMap = {
     b = "s",
     c = "d",
     d = "space",
-    start = "return",
-    credit = "rshift",
-    debug = "j"
+    start = "return"
 }
 
 game.prettyKeys = {
@@ -207,7 +205,7 @@ function game:keyDown(key, sc, rep)
     end
 end
 
-function game:keyUp(key, sc, rep)
+function game:keyUp(key, sc)
     local y = nil
     for i, j in pairs(self.keyMap) do
         if key == j then

@@ -1,11 +1,12 @@
-PLUMINO_VERSION = {0, 0, 3}
+PLUMINO_VERSION = {0, 1, 0}
 
 modeNames = {
     "marathon",
     "sprint",
     "ionlysprint",
     "sinemarathon",
-    "testmode"
+    "testmode",
+    "squirrel"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
@@ -29,6 +30,7 @@ require "util"
 inspect = require "lib/inspect"
 require "game"
 require "stuff/ui"
+local json = require "lib/json"
 
 local libstatus, liberr = pcall(function() discord = require "lib/discordRPC" end)
 
@@ -116,7 +118,8 @@ local files = {
     "menu",
     "splash",
     "title",
-    "credits"
+    "credits",
+    "keyconfig"
 }
 
 function love.load()
@@ -152,10 +155,24 @@ function love.load()
         game.sfx[p] = love.audio.newSource("assets/sfx/"..f, "static")
     end
 
-    if love.filesystem.getInfo("assets/bgm", "directory") then
-        for p, f in ipairs(game.bgm) do -- handle bgm loading
-            game.bgm[p] = love.audio.newSource("assets/bgm/"..f, "stream")
-            game.bgm[p]:setLooping(true)
+    if love.filesystem and love.filesystem.getInfo then -- fix crash on some platforms
+        if love.filesystem.getInfo("assets/bgm", "directory") then
+            for p, f in ipairs(game.bgm) do -- handle bgm loading
+                game.bgm[p] = love.audio.newSource("assets/bgm/"..f, "stream")
+                game.bgm[p]:setLooping(true)
+            end
+        end
+    end
+
+    if love.filesystem then
+        local c, e = love.filesystem.read("keys.psv")
+        if c == nil then
+            print("[WARNING!] An error has occurred while attempting to load the key configuration.")
+            print("[WARNING!] This is not an error. Details:")
+            print(e)
+        else
+            local t = json.decode(c)
+            game.keyMap = deepcopy(t)
         end
     end
 
@@ -221,9 +238,9 @@ function love.keypressed(k, sc, r)
     game:doInput()
 end
 
-function love.keyreleased(k, sc, r)
-    game:keyUp(k, sc, r)
+function love.keyreleased(k, sc)
+    game:keyUp(k, sc)
     if game.state and game.state.keyUp then
-        game.state:keyUp(k, sc, r)
+        game.state:keyUp(k, sc)
     end
 end

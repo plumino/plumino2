@@ -41,6 +41,15 @@ function tablecontains(tbl, element)
     return false
 end
 
+function tableindex(tbl, el)
+    for i, v in ipairs(tbl) do
+        if v == el then
+            return i
+        end
+    end
+    return -1
+end
+
 function centerText(tx, fn)
     return (800/2)-(fn:getWidth(tx)/2)
 end
