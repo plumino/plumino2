@@ -35,7 +35,9 @@ game.prettyKeys = {
     rshift = "Right SHIFT",
     lshift = "Left SHIFT",
     lctrl = "Left CONTROL",
-    rctrl = "Right CONTROL"
+    rctrl = "Right CONTROL",
+    lgui = "Left WINDOWS",
+    rgui = "Right WINDOWS"
 }
 
 game.prettyKeys["return"] = "ENTER"
