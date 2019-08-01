@@ -87,6 +87,10 @@ return {
             if self.menustate == 1 then
                 self.menuindex = 1
                 self.menustate = 0
+                return
+            end
+            if self.menustate == 0 then
+                game:switchState("title")
             end
         end
         if game.keys.c then

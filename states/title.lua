@@ -24,7 +24,7 @@ return {
         local t = "Press ["..game:prettyKey(game.keyMap.start).."] to begin!"
         love.graphics.print(t, (self.w/2)-(game.font.med2:getWidth(t)/2), 500)
 
-        local c = "Press ["..game:prettyKey(game.keyMap.b).."] to set up keys."
+        local c = "Press ["..game:prettyKey(game.keyMap.b).."] for the options menu."
         love.graphics.setFont(game.font.std)
         love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 530)
 
@@ -33,14 +33,14 @@ return {
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
 
         love.graphics.setColor(0, 0, 0, self.alpha/100)
-        love.graphics.rectangle("fill", 0, 0, self.w, self.h)
+        love.graphics.rectangle("fill", 0, 0, window.w, window.h)
     end,
     keyDown = function(self, k, sc, r)
         if game.keys.start then
             game:switchState("menu")
         end
         if game.keys.b then
-            game:switchState("keyconfig")
+            game:switchState("options")
         end
     end
 }

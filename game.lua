@@ -145,6 +145,8 @@ function game:init(rotation, options)
     self.gravitycounter = 0
     self.isSoftDropping = false
 
+    self.upLock = false
+
     self.stats = {}
 
     self.stats.score = 0
@@ -155,7 +157,7 @@ function game:init(rotation, options)
     self.stats.pieces = 0
     self.stats.pieceLocks = 0
 
-    self:next()
+    self:next(true)
     self.hasRanInit = true
 end
 
@@ -181,6 +183,10 @@ function game:update()
         self:doDAS()
         self:doGravity()
         self:doLockDelay()
+    end
+
+    if not self.keys.up and self.upLock then
+        self.upLock = false
     end
 
     if rotations[self.rotsys].update then
@@ -295,7 +301,7 @@ function game:movePiece(x, y)
     end
 end
 
-function game:next()
+function game:next(dontRotate)
     if self.are > 0 then return end
 
     self.piece = self:buildPiece(self.nextPiece)
@@ -305,7 +311,9 @@ function game:next()
 
     self.piecex, self.piecey = rotations[self.rotsys]:getSpawnLocation()
 
-    self:doRotation(self.keys.b, self.keys.a or self.keys.c, true)
+    if not dontRotate then
+        self:doRotation(self.keys.b, self.keys.a or self.keys.c, true)
+    end
     self:movePiece(0, -1)
 
     for y = 1, #self.piece.type[self.piece.state], 1 do
@@ -381,7 +389,7 @@ end
 
 function game:doLockDelay()
     if self.are > 0 then return end
-    if game.keys.down then
+    if (game.keys.down and optionFlags.sonicDrop) or (game.keys.up and not optionFlags.sonicDrop) then
         self.lockdelay = 0
     end
     if self:isColliding(nil, nil, self.piecey+1) then
@@ -461,6 +469,14 @@ function game:doClearLines()
     return clc
 end
 
+function game:getGhostPosition()
+    for i = self.piecey, #self.matrix do
+        if self:isColliding(nil, nil, i+1) then
+            return i
+        end
+    end
+end
+
 function game:doGravity()
     if self.are > 0 then return end
 
@@ -468,8 +484,9 @@ function game:doGravity()
     if self.keys.down then
         grav = 1 + self.speeds.gravity
     end
-    if self.keys.up then
-        grav = 20 -- haha yes
+    if self.keys.up and not self.upLock then
+        self.piecey = self:getGhostPosition() -- haha yes
+        self.upLock = true
     end
 
     self.gravitycounter = self.gravitycounter + grav

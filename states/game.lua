@@ -112,8 +112,8 @@ return {
         local ty = (game.playfieldDimensions.y * minoDim)
         love.graphics.setColor(0, 0, 0, 0.7)
 
-        local CENTER_X = (800-tx)/2
-        local CENTER_Y = (600-ty)/2
+        local CENTER_X = (window.w-tx)/2
+        local CENTER_Y = (window.h-ty)/2
 
         love.graphics.rectangle("fill", CENTER_X, CENTER_Y, tx, ty)
 
@@ -158,7 +158,7 @@ return {
                     for x = 1, #h, 1 do
                         if rotations[game.rotsys].structure[game.nextPiece][1][y][x] == 1 then
                             love.graphics.setColor(unpack(rotations[game.rotsys].colours[game.nextPiece] or {1, 1, 1, 1}))
-                            love.graphics.draw(game.gfx.mino, (800/2-40)+((x)*minoDim), ((600-ty-220)-minoDim)+((y)*minoDim))
+                            love.graphics.draw(game.gfx.mino, (window.w/2-40)+((x)*minoDim), ((window.h-ty-220)-minoDim)+((y)*minoDim))
                         end
                     end
                 end
@@ -178,7 +178,7 @@ return {
             local t = "GAME OVER"
             if game.won then t = "EXCELLENT!" end
             local total = game.font.med:getHeight(t)
-            love.graphics.print(t, (800/2)-(game.font.med3:getWidth(t)/2), (600/2)-total)
+            love.graphics.print(t, (window.w/2)-(game.font.med3:getWidth(t)/2), (window.h/2)-total)
             love.graphics.setFont(game.font.med2)
         end
 
@@ -186,13 +186,13 @@ return {
         local timer = game.timer - game.timeStart
         local timeText = string.format("%02d:%02d.%02d", math.abs(math.floor(timer/60)), math.floor(timer%60), math.floor((timer*100)%100))
         local fw = game.font.med2:getWidth(timeText)
-        love.graphics.print(timeText, (800/2)-(fw/2), (600-ty)+200)
+        love.graphics.print(timeText, (window.w/2)-(fw/2), (window.h-ty)+200)
 
         if self.drawingReadyGo then
             love.graphics.setFont(game.font.med2)
             local w = game.font.med2:getWidth(self.readyGoText)
             local h = game.font.med2:getHeight(self.readyGoText)
-            love.graphics.print(self.readyGoText, (800/2)-(w/2), (600/2)-(h/2))
+            love.graphics.print(self.readyGoText, (window.w/2)-(w/2), (window.h/2)-(h/2))
         end
     end,
     stop = function(self)

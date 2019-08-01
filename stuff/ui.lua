@@ -5,8 +5,8 @@ local minoDim = 16
 local tx = (game.playfieldDimensions.x * minoDim)
 local ty = (game.playfieldDimensions.y * minoDim)
 
-local CENTER_X = (800-tx)/2
-local CENTER_Y = (600-ty)/2
+local CENTER_X = (window.w-tx)/2
+local CENTER_Y = (window.h-ty)/2
 
 local RIGHT_OF_FIELD = (CENTER_X+(CENTER_X/2))+10
 

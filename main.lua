@@ -1,5 +1,8 @@
 PLUMINO_VERSION = {0, 1, 0}
 
+window = {}
+window.w, window.h, window.mode = love.window.getMode()
+
 modeNames = {
     "marathon",
     "sprint",
@@ -31,6 +34,7 @@ inspect = require "lib/inspect"
 require "game"
 require "stuff/ui"
 local json = require "lib/json"
+require "states/options/main"
 
 local libstatus, liberr = pcall(function() discord = require "lib/discordRPC" end)
 
@@ -89,9 +93,6 @@ screenX = 0
 screenY = 0
 screenCol = {1, 1, 1, 1}
 
-window = {}
-window.w, window.h, window.mode = love.window.getMode()
-
 function game:switchState(name, args)
     if not game.states[name] then
         error("Could not switch to state "..name)
@@ -119,7 +120,8 @@ local files = {
     "splash",
     "title",
     "credits",
-    "keyconfig"
+    "keyconfig",
+    "options"
 }
 
 function love.load()
