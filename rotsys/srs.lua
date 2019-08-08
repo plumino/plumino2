@@ -157,6 +157,9 @@ function rotations.SRS:wallkick(piece, a, b)
     if game.piece.name == "I" then
         offset = I
     end
+    if game.piece.name == "O" then
+        offset = O
+    end
     local kicks = offset[names[a] .. names[b]]
     for _, kick in ipairs(kicks) do
         ax = game.piecex + kick[1]
