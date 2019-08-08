@@ -19,10 +19,13 @@ return {
     {
         name = "Max framerate: {v} FPS",
         lAction = function(self)
-
+            MAX_FPS = MAX_FPS - 1
+            if MAX_FPS < 10 then
+                MAX_FPS = 10
+            end
         end,
         rAction = function(self)
-
+            MAX_FPS = MAX_FPS + 1
         end,
         value = function(self) return MAX_FPS end
     },

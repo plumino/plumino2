@@ -59,6 +59,12 @@ return {
         if game.keys.a then
             self.options[self.menuindex]:aAction()
         end
+        if game.keys.left then
+            self.options[self.menuindex]:lAction()
+        end
+        if game.keys.right then
+            self.options[self.menuindex]:rAction()
+        end
         if game.keys.b then
             game:switchState("title")
         end
