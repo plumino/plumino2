@@ -104,14 +104,20 @@ end
 
 function rotations.INCREMENTAL:wallkick(piece, a, b)
     local failed = true
-    local change = 0
-    if not game:isColliding(rot, game.piecex+1) then -- mihara's conspiracy
-        change = 1
-        failed = false
+    local changea = 0
+    local achange = 0
+    while true do
+        changea = changea + 1
+        if not game:isColliding(rot, game.piecex+changea) then -- mihara's conspiracy
+            achange = changea
+            failed = false
+            break
+        end
+        if not game:isColliding(rot, game.piecex-changea) then
+            achange = (changea*-1)
+            failed = false
+            break
+        end
     end
-    if not game:isColliding(rot, game.piecex-1) then
-        change = -1
-        failed = false
-    end
-    return failed, change, 0
+    return failed, achange, 0
 end

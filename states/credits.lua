@@ -3,7 +3,7 @@ return {
         self.credits = [[[ DEVELOPMENT ]
 ry00001 & LewisTehMinerz - Code
 Oshisaure - Technical help
-#spyros-dev-lag - Technical help
+#spyros-dev-lab - Technical help
 
 [ ASSETS ]
 GlitchyPSI - Logo
