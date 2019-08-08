@@ -161,7 +161,7 @@ function rotations.SRS:wallkick(piece, a, b)
         offset = O
     end
     local kicks = offset[names[a] .. names[b]]
-    for _, kick in ipairs(kicks) do
+    for _, kick in ipairs(kicks or {{0,0}}) do
         ax = game.piecex + kick[1]
         ay = game.piecey + (kick[2] * -1)
         if not game:isColliding(game.piece.type[b], ax, ay) then
