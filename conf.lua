@@ -3,6 +3,8 @@ function love.conf(t)
     t.window.height = 600
     t.window.title = "Plumino²"
     t.identity = "plumino2"
+
+    t.window.vsync = 0 --asdjlkasjldksajkldjaslk
 end
 
 function love.errorhandler(err)

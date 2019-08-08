@@ -13,6 +13,28 @@ return {
         aAction = function(self) game:switchState("keyconfig") end
     },
     {
+        name = "",
+        unselectable = true,
+    },
+    {
+        name = "Max framerate: {v} FPS",
+        lAction = function(self)
+
+        end,
+        rAction = function(self)
+
+        end,
+        value = function(self) return MAX_FPS end
+    },
+    {
+        name = "NOTE: If not set to 60 FPS, the game WILL NOT run correctly.",
+        unselectable = true
+    },
+    {
+        name = "",
+        unselectable = true
+    },
+    {
         name = "Sonic drop (TGM-style): {v}",
         aAction = function(self)
             optionFlags.sonicDrop = not optionFlags.sonicDrop

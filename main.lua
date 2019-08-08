@@ -3,6 +3,9 @@ PLUMINO_VERSION = {0, 1, 0}
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
 
+MAX_FPS = 60
+local next_time = love.timer.getTime()
+
 modeNames = {
     "marathon",
     "sprint",
@@ -199,6 +202,8 @@ function love.update(dt)
         end
         discord.runCallbacks()
     end
+
+    next_time = next_time + 1/MAX_FPS
 end
 
 function love.quit()
@@ -224,12 +229,19 @@ function love.draw()
 
     love.graphics.setFont(game.font.med)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.print(tostring(love.timer.getFPS()).." FPS", 0, 0)
+    love.graphics.print(tostring(love.timer.getFPS()).."/"..MAX_FPS.." FPS", 0, 0)
 
     love.graphics.setCanvas()
     love.graphics.setColor(unpack(screenCol))
     love.graphics.setBlendMode("alpha", "premultiplied")
     love.graphics.draw(screen, screenX, screenY)
+
+    local current_time = love.timer.getTime()
+    if next_time <= current_time then
+        next_time = current_time
+        return
+    end
+    love.timer.sleep(next_time - current_time)
 end
 
 function love.keypressed(k, sc, r)

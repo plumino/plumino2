@@ -40,12 +40,18 @@ return {
         local currlen = self.length
         if game.keys.down then
             self.menuindex = self.menuindex + 1
+            while self.options[self.menuindex] and self.options[self.menuindex].unselectable do
+                self.menuindex = self.menuindex + 1
+            end
             if self.menuindex > currlen then
                 self.menuindex = 1
             end
         end
         if game.keys.up then
             self.menuindex = self.menuindex - 1
+            while self.options[self.menuindex] and self.options[self.menuindex].unselectable do
+                self.menuindex = self.menuindex - 1
+            end
             if self.menuindex <= 0 then
                 self.menuindex = currlen
             end

@@ -7,7 +7,7 @@ return {
         self.rpArg = arg
 
         -- READY. GO.
-        self.readyGoText = "READY"
+        self.readyGoText = "Ready"
         self.readyGoCountdown = 0
         self.drawingReadyGo = true
         self.readyGoStage = 1
@@ -87,7 +87,7 @@ return {
                     updatePresence(pt)
                     self:playBGM(game.bgm[1])
                 elseif self.readyGoStage == 2 then
-                    self.readyGoText = "GO"
+                    self.readyGoText = "Go!"
                 end
                 if self.readyGoStage ~= 3 then
                     self.readyGoCountdown = 60
