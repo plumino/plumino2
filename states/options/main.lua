@@ -34,6 +34,10 @@ return {
         unselectable = true
     },
     {
+        name = "NOTE2: looking at you nora",
+        unselectable = true
+    },
+    {
         name = "",
         unselectable = true
     },
