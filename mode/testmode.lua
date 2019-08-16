@@ -34,7 +34,6 @@ return {
         if self.stopping then return end
         local rand, rand2 = love.math.random(), love.math.random()
         local val = 200
-        --local fx, fy = math.sin(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
         local fx, fy = 1/math.cos(love.timer.getTime())*val, 0
         local a = {self.sx+fx, self.sy+fy}
         if a then
@@ -43,16 +42,6 @@ return {
 
         screenX = -fx
         screenY = -fy
-
-        for i=1,10,1 do
-            --game.yOffset[i] = math.tan(i+love.timer.getTime()) * 30
-            --game.yOffset[i] = (1/math.cos(love.timer.getTime())) * 30
-            --[[game.xOffset[i] = rand*val - val/2
-            game.yOffset[i] = rand2*val - val/2
-
-            screenX = rand*val - val/2
-            screenY = 0]]
-        end
     end,
     draw = function(self)
         ui.drawScoreText("Marathon", 0)

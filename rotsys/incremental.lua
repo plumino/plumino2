@@ -10,7 +10,7 @@ rotations.INCREMENTAL = {
 
     -- Incremental stuff below
     order = 5,
-    pseudo = true
+    pseudo = false
 }
 
 local inspect = require("lib/inspect")
