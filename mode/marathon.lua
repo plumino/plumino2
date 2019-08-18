@@ -11,7 +11,17 @@ return {
             lineAre = 20
         }
 
+        self.speedcurve = {
+            1/63, 1/50, 1/39, 1/30, 1/22, 1/16, 1/12, 1/8, 1/6, 1/4, 1/3, 1/2, 1,
+            465/256, 731/256, 1280/256, 1707/256, 20
+        }
+
+        self:updateGravity()
+
         game.movereset = true
+    end,
+    updateGravity = function(self)
+        game.speeds.gravity = self.speedcurve[self.level+1]
     end,
     linesCleared = function(self, lines)
         if lines > 0 then
@@ -19,6 +29,7 @@ return {
 
             if game.stats.lines >= (self.level+1) * 10 then
                 self.level = self.level + 1
+                self:updateGravity()
             end
         end
     end,

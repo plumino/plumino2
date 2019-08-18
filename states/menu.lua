@@ -94,7 +94,7 @@ return {
             end
         end
         if game.keys.c then
-            game:switchState("splash")
+            game:switchState("options")
         end
     end
 }
