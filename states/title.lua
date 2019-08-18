@@ -15,7 +15,8 @@ return {
             "Only contains trace amounts of bugs.",
             "May contain nuts.",
             "Can you reach the top?",
-            "Ready for ARSinine moments!"
+            "Ready for ARSinine moments!",
+            "Not procedurally generated. Most of the time."
         }
 
         self.specialmessages = {
