@@ -21,7 +21,9 @@ return {
         game.movereset = true
     end,
     updateGravity = function(self)
-        game.speeds.gravity = self.speedcurve[self.level+1]
+        if self.speedcurve[self.level+1] then
+            game.speeds.gravity = self.speedcurve[self.level+1]
+        end
     end,
     linesCleared = function(self, lines)
         if lines > 0 then
