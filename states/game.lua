@@ -175,8 +175,8 @@ return {
 
         if self.drawgameover then
             love.graphics.setFont(game.font.med3)
-            local t = "GAME OVER"
-            if game.won then t = "EXCELLENT!" end
+            local t = "Game Over"
+            if game.won then t = "Excellent!" end
             local total = game.font.med:getHeight(t)
             love.graphics.print(t, (window.w/2)-(game.font.med3:getWidth(t)/2), (window.h/2)-total)
             love.graphics.setFont(game.font.med2)
