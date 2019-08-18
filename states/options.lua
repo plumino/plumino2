@@ -56,13 +56,13 @@ return {
                 self.menuindex = currlen
             end
         end
-        if game.keys.a then
+        if game.keys.a and self.options[self.menuindex].aAction then
             self.options[self.menuindex]:aAction()
         end
-        if game.keys.left then
+        if game.keys.left and self.options[self.menuindex].lAction then
             self.options[self.menuindex]:lAction()
         end
-        if game.keys.right then
+        if game.keys.right and self.options[self.menuindex].rAction then
             self.options[self.menuindex]:rAction()
         end
         if game.keys.b then
