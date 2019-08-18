@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {0, 2, 2}
+PLUMINO_VERSION = {0, 2, 3}
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
@@ -169,19 +169,24 @@ function love.load()
         end
     end
 
+    local runInputConfig = false
+
     if love.filesystem then
         local c, e = love.filesystem.read("keys.psv")
         if c == nil then
-            print("[WARNING!] An error has occurred while attempting to load the key configuration.")
-            print("[WARNING!] This is not an error. Details:")
-            print(e)
+            print('Input file load failed. Sending player to configurator.')
+            runInputConfig = true
         else
             local t = json.decode(c)
             game.keyMap = deepcopy(t)
         end
     end
 
-    game:switchState("splash")
+    if runInputConfig then
+        game:switchState("keyconfig", {"splash"})
+    else
+        game:switchState("splash")
+    end
 end
 
 function love.update(dt)

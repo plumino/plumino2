@@ -24,6 +24,8 @@ return {
             {{28, 11}, "Happy birthday Lilla!"},
             {{24, 2}, "Happy birthday Squish!"},
             {{13, 3}, "Happy birthday Amy!"},
+            {{13, 4}, "Happy birthday 0xFC!"},
+            {{20, 9}, "Happy birthday Fay!"},
             {{24, 12}, "Happy holidays!"},
             {{25, 12}, "Happy holidays!"},
             {{1, 1}, "Happy new year!"}

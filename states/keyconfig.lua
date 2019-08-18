@@ -2,7 +2,7 @@ local inspect = require "lib/inspect"
 local json = require "lib/json"
 
 return {
-    init = function(self)
+    init = function(self, arg)
         self.keys = {
             "up", "down", "left", "right", "a", "b", "c", "d", "start"
         }
@@ -10,8 +10,10 @@ return {
         self.newMap = {}
         self.keyTimer = 0
         self.timerRunning = false
-
-        self.firstKey = true
+        
+        if arg and arg[1] then
+            self.goToState = arg[1]
+        end
     end,
     draw = function(self)
         if self.keyTimer == 0 then
@@ -25,7 +27,7 @@ return {
             love.graphics.setFont(f)
             love.graphics.print(t, (window.w/2)-(f:getWidth(t)/2), 250)
         else
-            local t = "Key configuration complete!\nReturning to title..."
+            local t = "Key configuration complete!"
             local f = game.font.med2
             love.graphics.setFont(f)
             love.graphics.print(t, (window.w/2)-(f:getWidth(t)/2), 200)
@@ -37,15 +39,11 @@ return {
             self.keyTimer = self.keyTimer - 1
         end
         if self.keyTimer <= 0 and self.timerRunning then
-            game:switchState("title")
+            game:switchState(self.goToState or "title")
         end
     end,
-    keyUp = function(self, k, sc)
+    keyDown = function(self, k, sc)
         if self.keyTimer == 0 then
-            if self.firstKey then
-                self.firstKey = false
-                return
-            end
             self.newMap[self.keys[self.current]] = k
             self.current = self.current + 1
             if self.current > #self.keys then
