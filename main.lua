@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {0, 2, 3}
+PLUMINO_VERSION = {0, 2, 4}
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()

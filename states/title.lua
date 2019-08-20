@@ -52,22 +52,25 @@ return {
         love.graphics.setFont(game.font.med2)
 
         love.graphics.setColor(1, 1, 1, self.logoalpha/100)
-        love.graphics.draw(game.gfx.logo, (self.w/2)-(game.gfx.logo:getWidth()/2), 200)
+        love.graphics.draw(game.gfx.logo, (self.w/2)-(game.gfx.logo:getWidth()/2), 150)
 
         love.graphics.setFont(game.font.med)
-        love.graphics.print(self.message, (self.w/2)-(game.font.med:getWidth(self.message)/2), 350)
+        love.graphics.print(self.message, (self.w/2)-(game.font.med:getWidth(self.message)/2), 300)
 
         love.graphics.setFont(game.font.med2)
         local t = "Press ["..game:prettyKey(game.keyMap.start).."] to begin!"
-        love.graphics.print(t, (self.w/2)-(game.font.med2:getWidth(t)/2), 500)
+        love.graphics.print(t, (self.w/2)-(game.font.med2:getWidth(t)/2), 420)
 
         local c = "Press ["..game:prettyKey(game.keyMap.b).."] for the options menu."
         love.graphics.setFont(game.font.std)
-        love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 530)
+        love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 450)
 
         local ver = string.format("v. %s", versionString())
         love.graphics.setFont(game.font.med)
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
+
+        local notice = "by ry00001 2019"
+        love.graphics.print(notice, 20, (window.h-game.font.med:getHeight(notice))-20)
 
         love.graphics.setColor(0, 0, 0, self.alpha/100)
         love.graphics.rectangle("fill", 0, 0, window.w, window.h)

@@ -49,5 +49,15 @@ return {
         value = function(self)
             return v(optionFlags.sonicDrop)
         end
+    },
+    {
+        name = "",
+        unselectable = true
+    },
+    {
+        name = "Credits",
+        aAction = function(self)
+            game:switchState("credits")
+        end
     }
 }
