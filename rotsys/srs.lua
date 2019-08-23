@@ -3,7 +3,11 @@ local BLANK = {0, 0, 0, 0}
 rotations.SRS = {
     name = "Super Rotation System",
     alwayswallkick = true,
-    preferredRandom = "TGM"
+    preferredRandom = "TGM",
+    credit = {
+        design = "The Tetris Company Ltd.",
+        impl = "ry00001"
+    }
 }
 
 rotations.SRS.structure = {

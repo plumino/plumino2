@@ -13,7 +13,11 @@ local BLANK = {0, 0, 0, 0}
 
 rotations.ARS = {
     name = "Arika Rotation System",
-    preferredRandom = "TGM"
+    preferredRandom = "TGM",
+    credit = {
+        design = "Arika Co, Ltd.",
+        impl = "ry00001"
+    }
 }
 
 rotations.ARS.structure = {

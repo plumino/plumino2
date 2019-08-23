@@ -24,17 +24,8 @@ And you
 
 
 
-
 Powered by Love2D
 (C) Plumino Team, 2019]]
-
-        self.colours = {
-            {1, {1, 0.2, 0.2}},
-            {8, {1, 0.2, 0.2}},
-            {15, {1, 0.2, 0.2}},
-            {26, {0, 0.4, 0.4}},
-            {27, {0, 0.4, 0.4}}
-        }
 
         self.lines = {}
         for s in self.credits:gmatch("([^\n]*)\n?") do

@@ -5,7 +5,11 @@ rotations.FLASHLIGHT = {
     alwayswallkick = true,
     banana = 0,
     bananastate = 0,
-    preferredRandom = "TGM"
+    preferredRandom = "TGM",
+    credit = {
+        design = "The Tetris Company Ltd.",
+        impl = "ry00001"
+    }
 }
 
 rotations.FLASHLIGHT.structure = {

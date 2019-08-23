@@ -10,7 +10,11 @@ rotations.INCREMENTAL = {
 
     -- Incremental stuff below
     order = 5,
-    pseudo = false
+    pseudo = false,
+    credit = {
+        design = "your computer!",
+        impl = "ry00001"
+    }
 }
 
 local inspect = require("lib/inspect")
