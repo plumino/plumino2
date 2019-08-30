@@ -1,26 +1,52 @@
 return {
     init = function(self)
         self.credits = [[[ DEVELOPMENT ]
-ry00001 - Code, graphics
-Oshisaure - Technical help
-#spyros-dev-lab - Technical help
+- Programmer -
+ry00001
+
+- Main Game Graphics -
+ry00001
+
+- Inspired By -
+The Grand Master Series
+NullpoMino
+Cambridge
 
 
 
 [ ASSETS ]
-GlitchyPSI - Logo
-Penguin - Mino skin
-Share Tech Mono - Font
+- Logo Graphic -
+GlitchyPSI
+
+- Mino Graphic -
+Penguin
+
+- Game Font -
+Share Tech Mono
+by Carrois Apostrophe
+
+- Audio -
+NullNoname/NullpoMino Audio Team
 
 
 
 [ SPECIAL THANKS ]
+- Technical Help and Support -
+Oshisaure
+0xFC963F18DC21
+
+- Inspiration -
+Arika Co. Ltd.
+Elzed
+NullNoname/NullpoMino Team
+
+- Playtesting -
 Oshisaure
 0xFC963F18DC21
 Akari
 Doremy
-Everyone who has playtested
-And you
+
+Thank you for playing.
 
 
 

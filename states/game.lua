@@ -134,6 +134,16 @@ return {
         end
 
         if game.willTrackTime or self.overrideMatrix then
+            if game.drawGhost and not self.overrideMatrix and game.piece.active then
+                for y, j in ipairs(game.piece.type[game.piece.state]) do
+                    for x, h in ipairs(j) do
+                        if h == 1 and not game.rendermatrix[game:getGhostPosition()+y][game.piecex+x] then
+                            game.rendermatrix[game:getGhostPosition()+y][game.piecex+x] = 'GHOST'
+                        end
+                    end
+                end
+            end
+
             for y, j in ipairs(game.rendermatrix) do
                 for x, d in ipairs(j) do
                     if d ~= false then
@@ -144,6 +154,9 @@ return {
                         if game.mode.getPieceColour then
                             colour = game.mode:getPieceColour(x, y, d)
                         end
+                        if d == "GHOST" then
+                            colour = {1, 1, 1, 0.5}
+                        end
                         love.graphics.setColor(unpack(colour))
                     else
                         love.graphics.setColor(1, 1, 1, 0)
@@ -152,13 +165,17 @@ return {
                 end
             end
 
-            if game.nextPiece ~= nil and not self.overrideMatrix then
-                local h = rotations[game.rotsys].structure[game.nextPiece][1]
-                for y = 1, #h, 1 do
-                    for x = 1, #h, 1 do
-                        if rotations[game.rotsys].structure[game.nextPiece][1][y][x] == 1 then
-                            love.graphics.setColor(unpack(rotations[game.rotsys].colours[game.nextPiece] or {1, 1, 1, 1}))
-                            love.graphics.draw(game.gfx.mino, (window.w/2-40)+((x)*minoDim), ((window.h-ty-220)-minoDim)+((y)*minoDim))
+            for i = 1, game.drawNextQueue do
+                local next = game.nextQueue[i]
+
+                if next ~= nil and not self.overrideMatrix then
+                    local h = rotations[game.rotsys].structure[next][1]
+                    for y = 1, #h, 1 do
+                        for x = 1, #h, 1 do
+                            if rotations[game.rotsys].structure[next][1][y][x] == 1 then
+                                love.graphics.setColor(unpack(rotations[game.rotsys].colours[next] or {1, 1, 1, 1}))
+                                love.graphics.draw(game.gfx.mino, ((window.w/2-(minoDim*4))+((x)*minoDim))+((i-1)*75), ((window.h-ty-220)-minoDim)+((y)*minoDim))
+                            end
                         end
                     end
                 end

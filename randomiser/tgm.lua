@@ -7,9 +7,8 @@ end
 
 function randomiser.TGM:next()
     -- TGM randomiser
-    local rng = love.math.newRandomGenerator(os.time())
     local pieces = {"I", "J", "L", "S", "T", "O", "Z"}
-    local roll = pieces[rng:random(1, #pieces)]
+    local roll = pieces[love.math.random(1, #pieces)]
     if roll == "O" and self.firstPiece then
         return self:next()
     end
@@ -20,7 +19,7 @@ function randomiser.TGM:next()
             table.insert(self.history, 1, roll)
             return roll
         else
-            roll = pieces[rng:random(1, #pieces)]
+            roll = pieces[love.math.random(1, #pieces)]
         end
     end
     return roll

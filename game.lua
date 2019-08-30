@@ -132,7 +132,13 @@ function game:init(rotation, options)
     self.sections = {}
 
     self.piece = nil
-    self.nextPiece = self.random:next()
+    self.nextQueue = {}
+    for i=1,6 do
+        table.insert(self.nextQueue, self.random:next())
+    end
+
+    self.drawNextQueue = 3
+    self.drawGhost = true
 
     self.lockdelay = self.speeds.lockDelay
     self.are = 0
@@ -304,8 +310,9 @@ end
 function game:next(dontRotate)
     if self.are > 0 then return end
 
-    self.piece = self:buildPiece(self.nextPiece)
-    self.nextPiece = self.random:next()
+    self.piece = self:buildPiece(table.remove(self.nextQueue, 1))
+    table.insert(self.nextQueue, self.random:next())
+    print(inspect(self.nextQueue))
 
     local n = self.piece.name
 
