@@ -146,7 +146,7 @@ return {
 
             for y, j in ipairs(game.rendermatrix) do
                 for x, d in ipairs(j) do
-                    if d ~= false then
+                    if d ~= false and y > game.invisrows then
                         local colour = rotations[game.rotsys].colours[d] or {1, 1, 1, 1}
                         if rotations[game.rotsys].getPieceColour then
                             colour = rotations[game.rotsys]:getPieceColour(x, y, d)
