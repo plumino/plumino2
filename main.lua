@@ -12,8 +12,7 @@ modeNames = {
     "ionlysprint",
     "sinemarathon",
     "testmode",
-    "squirrel",
-    "mastery"
+    "squirrel"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
