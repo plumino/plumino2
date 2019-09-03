@@ -161,7 +161,7 @@ return {
                     else
                         love.graphics.setColor(1, 1, 1, 0)
                     end
-                    love.graphics.draw(game.gfx.mino, ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
+                    love.graphics.draw(game.mino[game.minoSkin], ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
                 end
             end
 
@@ -174,7 +174,7 @@ return {
                         for x = 1, #h, 1 do
                             if rotations[game.rotsys].structure[next][1][y][x] == 1 then
                                 love.graphics.setColor(unpack(rotations[game.rotsys].colours[next] or {1, 1, 1, 1}))
-                                love.graphics.draw(game.gfx.mino, ((window.w/2-(minoDim*4))+((x)*minoDim))+((i-1)*75), ((window.h-ty-220)-minoDim)+((y)*minoDim))
+                                love.graphics.draw(game.mino[game.minoSkin], ((window.w/2-(minoDim*4))+((x)*minoDim))+((i-1)*75), ((window.h-ty-220)-minoDim)+((y)*minoDim))
                             end
                         end
                     end

@@ -5,7 +5,7 @@ return {
 
         game.speeds = {
             gravity = 1/64, -- 1/64th of a G
-            das = 8,
+            das = 13,
             lockDelay = 30,
             are = 10,
             lineAre = 20

@@ -19,7 +19,9 @@ Cambridge
 GlitchyPSI
 
 - Mino Graphic -
-Penguin
+Default: Penguin
+Bricks, Retro, Flat: ry00001
+Classic: Oshisaure
 
 - Game Font -
 Share Tech Mono

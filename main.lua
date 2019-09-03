@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {0, 3, 0}
+PLUMINO_VERSION = {0, 3, 1}
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
@@ -12,7 +12,8 @@ modeNames = {
     "ionlysprint",
     "sinemarathon",
     "testmode",
-    "squirrel"
+    "squirrel",
+    "mastery"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
@@ -67,7 +68,6 @@ game.font = {
 game.gfx = {
     intro = "arikek.png",
     title = "title.png",
-    mino = "mino16.png",
     dev = "dev.png",
     poweredby = "poweredby.png",
     logo = "logo.png"
@@ -79,6 +79,25 @@ game.background = {
 
 game.bgm = {
     "bgm1.ogg"
+}
+
+game.mino = {
+    "1.png",
+    "2.png",
+    "2_alt.png",
+    "3.png",
+    "agc.png",
+    "flat.png",
+    "flat_bright.png"
+}
+game.minoName = {
+    "Default",
+    "Bricks",
+    "Bricks (alternate)",
+    "Retro",
+    "Classic",
+    "Flat (dark)",
+    "Flat (bright)"
 }
 
 modes = {}
@@ -165,6 +184,14 @@ function love.load()
             for p, f in ipairs(game.bgm) do -- handle bgm loading
                 game.bgm[p] = love.audio.newSource("assets/bgm/"..f, "stream")
                 game.bgm[p]:setLooping(true)
+            end
+        end
+    end
+
+    if love.filesystem and love.filesystem.getInfo then -- fix crash on some platforms
+        if love.filesystem.getInfo("assets/gfx/mino", "directory") then
+            for p, f in ipairs(game.mino) do -- handle bgm loading
+                game.mino[p] = love.graphics.newImage("assets/gfx/mino/"..f)
             end
         end
     end

@@ -17,6 +17,8 @@ function game:loadMode(name, rotation)
     self.mode:init()
 end
 
+game.minoSkin = 1
+
 game.playfieldDimensions = {x=10, y=20}
 
 game.keyMap = {

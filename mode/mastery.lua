@@ -13,10 +13,11 @@ return {
             1280, 1024, 768, math.huge
         }
         self.gravlevels = {
-            0, 30, 35, 40, 50, 60, 70, 80, 90, 100,
+            30, 35, 40, 50, 60, 70, 80, 90, 100,
             120, 140, 160, 170, 200, 220, 230, 233, 236,
-            239, 243, 247, 251, 300, 330, 360, 400, 420, 450, 500
+            239, 243, 247, 251, 300, 330, 360, 400, 420, 450, 500, 10000
         }
+        self.gravpointer = 1
 
         self.score = 0
         self.grades = {
@@ -27,16 +28,33 @@ return {
         }
         self.grade = 0
 
-        -- game.speeds = {
-
-        -- }
+        game.speeds = {
+            gravity = self.gravity[self.gravpointer]/256,
+            are = 30,
+            das = 16,
+            lockDelay = 30,
+            lineAre = 46
+        }
     end,
-
+    linesCleared = function(self, lines)
+        if (self.level % 100 ~= 99 and lines == 0) or (self.level % 100 == 99 and lines > 0) then
+            self.level = self.level + 1
+        end
+    end,
     draw = function(self)
-        ui.drawScoreFont('Points', 2)
-        ui.drawScoreFont(tostring(self.score), 3)
-        ui.drawScoreFont('Next grade at', 4)
+        ui.drawScoreText('Mastery', 0)
+
+        ui.drawScoreText('Points', 2)
+        ui.drawScoreText(tostring(self.score), 3)
+        ui.drawScoreText('Next grade at', 4)
         local a = '??????'
-        if self.grades[self.score] 
+        if self.grades[self.grade] then
+            a = self.grades[self.grade]
+        end
+        ui.drawScoreText(a, 5)
+        ui.drawScoreText('Points', 6)
+
+        ui.drawScoreText('Level', 8)
+        ui.drawScoreText(self.level .. '/' .. self.nextsection, 9)
     end
 }

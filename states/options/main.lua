@@ -51,6 +51,24 @@ return {
         end
     },
     {
+        name = "Block skin: {v}",
+        lAction = function(self)
+            game.minoSkin = game.minoSkin - 1
+            if game.minoSkin < 1 then
+                game.minoSkin = #game.mino
+            end
+        end,
+        rAction = function(self)
+            game.minoSkin = game.minoSkin + 1
+            if game.minoSkin > #game.mino then
+                game.minoSkin = 1
+            end
+        end,
+        value = function(self)
+            return game.minoName[game.minoSkin]
+        end
+    },
+    {
         name = "",
         unselectable = true
     },
