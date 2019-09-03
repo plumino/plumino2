@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {0, 3, 1}
+PLUMINO_VERSION = {0, 3, 2}
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
@@ -218,6 +218,8 @@ end
 function love.update(dt)
     game:checkJustPressed()
 
+    game:doInput()
+
     if game.state and game.state.update then
         game.state:update(dt)
     end
@@ -280,7 +282,7 @@ function love.keypressed(k, sc, r)
     if game.state and game.state.keyDown then
         game.state:keyDown(k, sc, r)
     end
-    game:doInput()
+    game:doAltInput()
 end
 
 function love.keyreleased(k, sc)

@@ -378,15 +378,20 @@ end
 
 function game:doInput()
     if self.willTrackTime then
-        if self.keys.left and not self:isColliding(nil, self.piecex-1) then
+        if self.justPressed.left and not self:isColliding(nil, self.piecex-1) then
             self.piecex = self.piecex - 1
         end
-        if self.keys.down then
+        if self.justPressed.down then
             self.isSoftDropping = true
         end
-        if self.keys.right and not self:isColliding(nil, self.piecex+1) then
+        if self.justPressed.right and not self:isColliding(nil, self.piecex+1) then
             self.piecex = self.piecex + 1
         end
+    end
+end
+
+function game:doAltInput()
+    if self.willTrackTime then
         if rotations[self.rotsys].doInput then
             rotations[self.rotsys]:doInput()
         end
