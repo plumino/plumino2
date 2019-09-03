@@ -36,9 +36,9 @@ return {
             love.graphics.print(tappend .. thething, 25, 35 + (count*25) + (game.font.med:getHeight(tappend..j.name)))
         end
     end,
-    keyDown = function(self, k, sc, ro)
+    update = function(self, k, sc, ro)
         local currlen = self.length
-        if game.keys.down then
+        if game.justPressed.down then
             self.menuindex = self.menuindex + 1
             while self.options[self.menuindex] and self.options[self.menuindex].unselectable do
                 self.menuindex = self.menuindex + 1
@@ -47,7 +47,7 @@ return {
                 self.menuindex = 1
             end
         end
-        if game.keys.up then
+        if game.justPressed.up then
             self.menuindex = self.menuindex - 1
             while self.options[self.menuindex] and self.options[self.menuindex].unselectable do
                 self.menuindex = self.menuindex - 1
@@ -56,16 +56,16 @@ return {
                 self.menuindex = currlen
             end
         end
-        if game.keys.a and self.options[self.menuindex].aAction then
+        if game.justPressed.a and self.options[self.menuindex].aAction then
             self.options[self.menuindex]:aAction()
         end
-        if game.keys.left and self.options[self.menuindex].lAction then
+        if game.justPressed.left and self.options[self.menuindex].lAction then
             self.options[self.menuindex]:lAction()
         end
-        if game.keys.right and self.options[self.menuindex].rAction then
+        if game.justPressed.right and self.options[self.menuindex].rAction then
             self.options[self.menuindex]:rAction()
         end
-        if game.keys.b then
+        if game.justPressed.b then
             game:switchState("title")
         end
     end

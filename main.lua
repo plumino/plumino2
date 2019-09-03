@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {0, 3, 2}
+PLUMINO_VERSION = {0, 4, 0}
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
@@ -216,6 +216,7 @@ function love.load()
 end
 
 function love.update(dt)
+    game:updateKeys()
     game:checkJustPressed()
 
     game:doInput()
@@ -278,7 +279,7 @@ function love.draw()
 end
 
 function love.keypressed(k, sc, r)
-    game:keyDown(k, sc, r)
+    --game:keyDown(k, sc, r)
     if game.state and game.state.keyDown then
         game.state:keyDown(k, sc, r)
     end
@@ -286,7 +287,7 @@ function love.keypressed(k, sc, r)
 end
 
 function love.keyreleased(k, sc)
-    game:keyUp(k, sc)
+    --game:keyUp(k, sc)
     if game.state and game.state.keyUp then
         game.state:keyUp(k, sc)
     end

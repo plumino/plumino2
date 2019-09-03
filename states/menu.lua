@@ -55,24 +55,24 @@ return {
             end
         end
     end,
-    keyDown = function(self, k, sc, ro)
+    update = function(self)
         local currlen = self.modelen
         if self.menustate == 1 then
             currlen = self.rotlen
         end
-        if game.keys.down then
+        if game.justPressed.down then
             self.menuindex = self.menuindex + 1
             if self.menuindex > currlen then
                 self.menuindex = 1
             end
         end
-        if game.keys.up then
+        if game.justPressed.up then
             self.menuindex = self.menuindex - 1
             if self.menuindex <= 0 then
                 self.menuindex = currlen
             end
         end
-        if game.keys.a then
+        if game.justPressed.a then
             if self.menustate == 0 then
                 self.modesel = self.modes[self.menuindex]
                 self.menuindex = 1
@@ -83,7 +83,7 @@ return {
                 game:switchState("game", {self.modesel, self.rotations[self.menuindex]})
             end
         end
-        if game.keys.b then
+        if game.justPressed.b then
             if self.menustate == 1 then
                 self.menuindex = 1
                 self.menustate = 0
@@ -93,7 +93,7 @@ return {
                 game:switchState("title")
             end
         end
-        if game.keys.c then
+        if game.justPressed.c then
             game:switchState("options")
         end
     end

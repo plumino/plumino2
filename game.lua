@@ -234,6 +234,12 @@ function game:keyUp(key, sc)
     end
 end
 
+function game:updateKeys()
+    for i, j in pairs(game.keyMap) do
+        game.keys[i] = love.keyboard.isDown(j)
+    end
+end
+
 function game:checkJustPressed()
     self.justPressed = deepcopy(self.keysInactive)
     for i, j in pairs(self.keys) do

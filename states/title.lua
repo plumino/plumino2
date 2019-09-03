@@ -46,6 +46,13 @@ return {
         if self.alpha < 50 and self.logoalpha < 100 then
             self.logoalpha = self.logoalpha + self.logospeed
         end
+
+        if game.justPressed.start then
+            game:switchState("menu")
+        end
+        if game.justPressed.b then
+            game:switchState("options")
+        end
     end,
     draw = function(self)
         love.graphics.clear(0.1, 0.1, 0.1)
@@ -74,13 +81,5 @@ return {
 
         love.graphics.setColor(0, 0, 0, self.alpha/100)
         love.graphics.rectangle("fill", 0, 0, window.w, window.h)
-    end,
-    keyDown = function(self, k, sc, r)
-        if game.keys.start then
-            game:switchState("menu")
-        end
-        if game.keys.b then
-            game:switchState("options")
-        end
     end
 }
