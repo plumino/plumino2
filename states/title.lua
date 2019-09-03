@@ -72,7 +72,7 @@ return {
         love.graphics.setFont(game.font.std)
         love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 450)
 
-        local ver = string.format("v. %s", versionString())
+        local ver = string.format("v. %s (%s)", PLUMINO_VERSION_MEME, versionString())
         love.graphics.setFont(game.font.med)
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
 

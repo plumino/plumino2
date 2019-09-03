@@ -46,7 +46,6 @@ NullNoname/NullpoMino Team
 Oshisaure
 0xFC963F18DC21
 Akari
-Doremy
 
 Thank you for playing.
 
