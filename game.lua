@@ -74,6 +74,8 @@ game.justPressed = deepcopy(game.keys)
 game.currentBackground = 1
 
 function game:init(rotation, options)
+    print('-- INITIALISING GAME ENGINE --')
+
     self.timer = 0
     self.willTrackTime = false
     self.timeStart = 0

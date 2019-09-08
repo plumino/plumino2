@@ -9,6 +9,7 @@ local next_time = love.timer.getTime()
 
 modeNames = {
     "marathon",
+    "20g_marathon",
     "sprint",
     "ionlysprint",
     "sinemarathon",

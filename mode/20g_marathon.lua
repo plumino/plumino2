@@ -1,29 +1,17 @@
 return {
-    name = "Marathon",
+    name = "Marathon (20G)",
     init = function(self)
         self.level = 0
 
         game.speeds = {
-            gravity = 1/64, -- 1/64th of a G
+            gravity = math.huge,
             das = 13,
             lockDelay = 30,
             are = 10,
             lineAre = 20
         }
 
-        self.speedcurve = {
-            1/63, 1/50, 1/39, 1/30, 1/22, 1/16, 1/12, 1/8, 1/6, 1/4, 1/3, 1/2, 1,
-            465/256, 731/256, 1280/256, 1707/256, math.huge
-        }
-
-        self:updateGravity()
-
         game.movereset = true
-    end,
-    updateGravity = function(self)
-        if self.speedcurve[self.level+1] then
-            game.speeds.gravity = self.speedcurve[self.level+1]
-        end
     end,
     linesCleared = function(self, lines)
         if lines > 0 then
@@ -31,12 +19,11 @@ return {
 
             if game.stats.lines >= (self.level+1) * 10 then
                 self.level = self.level + 1
-                self:updateGravity()
             end
         end
     end,
     draw = function(self)
-        ui.drawScoreText("Marathon", 0)
+        ui.drawScoreText("Marathon (20G)", 0)
 
         ui.drawScoreText("Lines", 2)
         ui.drawScoreText(tostring(game.stats.lines) .. "/" .. tostring((self.level+1) * 10), 3)

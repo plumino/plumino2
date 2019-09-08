@@ -64,7 +64,19 @@ return {
                 if self.blankstage < 1 then self.blankstage = 1 end
                 for i, j in ipairs(game.matrix[self.blankstage]) do
                     if j then
-                        game.matrix[self.blankstage][i] = "FLAT"
+                        local d = game.matrix[self.blankstage][i]
+                        local colour = rotations[game.rotsys].colours[d] or {1, 1, 1, 1}
+                        if rotations[game.rotsys].getPieceColour then
+                            colour = rotations[game.rotsys]:getPieceColour(x, y, d)
+                        end
+                        if game.mode.getPieceColour then
+                            colour = game.mode:getPieceColour(x, y, d)
+                        end
+                        if colour == {1, 1, 1, 1} then
+                            game.matrix[self.blankstage][i] = false
+                        else
+                            game.matrix[self.blankstage][i] = "FLAT"
+                        end
                     end
                 end
                 self.blankstage = self.blankstage - 1
