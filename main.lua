@@ -1,7 +1,7 @@
 PLUMINO_VERSION = {5, 0}
 PLUMINO_VERSION_CODENAME = 'AV Update'
 
-PLUMINO_DEV_BUILD = true
+PLUMINO_DEV_BUILD = false
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
