@@ -1,5 +1,7 @@
-PLUMINO_VERSION = {0, 4, 1}
-PLUMINO_VERSION_MEME = '0.IV.1st'
+PLUMINO_VERSION = {5, 0}
+PLUMINO_VERSION_CODENAME = 'AV Update'
+
+PLUMINO_DEV_BUILD = true
 
 window = {}
 window.w, window.h, window.mode = love.window.getMode()
@@ -75,7 +77,19 @@ game.gfx = {
 }
 
 game.background = {
-    "bg1.png"
+    "bg1.png",
+    "bg2.png",
+    "bg3.png",
+    "bg4.png",
+    "bg5.png",
+    "bg6.png",
+    "bg7.png",
+    "bg8.png",
+    "bg9.png",
+    "bg10.png",
+    "bg11.png",
+    "bg12.png",
+    "bg13.png"
 }
 
 game.bgm = {
@@ -108,7 +122,13 @@ randomiser = {}
 game.sfx = {
     ready = "ready.wav",
     go = "go.wav",
-    credit = "credit.wav"
+    credit = "credit.wav",
+    lock = "lock.wav",
+    gameover = "gameover.wav",
+    levelup = "levelup.ogg"
+}
+game.clearaudio = {
+    "1.wav", "2.wav", "3.wav", "4.wav"
 }
 
 screen = love.graphics.newCanvas() -- testing this
@@ -178,6 +198,10 @@ function love.load()
 
     for p, f in pairs(game.sfx) do -- handle sfx loading
         game.sfx[p] = love.audio.newSource("assets/sfx/"..f, "static")
+    end
+
+    for p, f in ipairs(game.clearaudio) do -- handle sfx loading
+        game.clearaudio[p] = love.audio.newSource("assets/sfx/clear/"..f, "static")
     end
 
     if love.filesystem and love.filesystem.getInfo then -- fix crash on some platforms

@@ -76,6 +76,10 @@ game.currentBackground = 1
 function game:init(rotation, options)
     print('-- INITIALISING GAME ENGINE --')
 
+    self.currentBackground = 1
+
+    self.playAudio = true
+
     self.timer = 0
     self.willTrackTime = false
     self.timeStart = 0
@@ -444,6 +448,9 @@ function game:printMatrix()
 end
 
 function game:lockPiece()
+    if self.playAudio then
+        self.sfx.lock:play()
+    end
     self.gravitycounter = 0
     self.piece.active = false
     local r = self.piece.type[self.piece.state]
@@ -456,6 +463,11 @@ function game:lockPiece()
     end
     local lines = self:doClearLines()
     self.stats.lines = self.stats.lines + lines
+    local audiolines = lines
+    if audiolines > 4 then audiolines = 4 end
+    if self.playAudio and audiolines > 0 then
+        self.clearaudio[audiolines]:play()
+    end
     if self.mode.linesCleared then
         self.mode:linesCleared(lines)
     end

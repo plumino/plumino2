@@ -55,6 +55,6 @@ function centerText(tx, fn)
 end
 
 function versionString()
-    local h = string.format("%d.%d.%d", PLUMINO_VERSION[1], PLUMINO_VERSION[2], PLUMINO_VERSION[3])
+    local h = string.format("%d.%d (%s)", PLUMINO_VERSION[1], PLUMINO_VERSION[2], PLUMINO_VERSION_CODENAME)
     return h
 end

@@ -60,6 +60,7 @@ return {
                     self.overrideMatrix = false
                     self.drawgameover = true
                     self.blankfield = false
+                    game.sfx.gameover:play()
                 end
                 if self.blankstage < 1 then self.blankstage = 1 end
                 for i, j in ipairs(game.matrix[self.blankstage]) do

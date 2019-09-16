@@ -72,11 +72,15 @@ return {
         love.graphics.setFont(game.font.std)
         love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 450)
 
-        local ver = string.format("v. %s (%s)", PLUMINO_VERSION_MEME, versionString())
+        local dev = ""
+        if PLUMINO_DEV_BUILD then
+            dev = " <DEV BUILD>"
+        end
+        local ver = string.format("v%s%s", versionString(), dev)
         love.graphics.setFont(game.font.med)
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
 
-        local notice = "by ry00001 2019"
+        local notice = "Game by ry00001 and others, 2019"
         love.graphics.print(notice, 20, (window.h-game.font.med:getHeight(notice))-20)
 
         love.graphics.setColor(0, 0, 0, self.alpha/100)

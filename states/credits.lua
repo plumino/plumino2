@@ -23,6 +23,9 @@ Default: Penguin
 Bricks, Retro, Flat: ry00001
 Classic: Oshisaure
 
+- Backgrounds -
+Provided by 0xFC963F18DC21
+
 - Game Font -
 Share Tech Mono
 by Carrois Apostrophe
@@ -51,8 +54,9 @@ Thank you for playing.
 
 
 
-Powered by Love2D
-(C) Plumino Team, 2019]]
+Produced by
+Plumino Team
+2019]]
 
         self.lines = {}
         for s in self.credits:gmatch("([^\n]*)\n?") do

@@ -31,6 +31,9 @@ return {
 
             if game.stats.lines >= (self.level+1) * 10 then
                 self.level = self.level + 1
+                if game.currentBackground + 1 < 14 then
+                    game.currentBackground = game.currentBackground + 1
+                end
                 self:updateGravity()
             end
         end
