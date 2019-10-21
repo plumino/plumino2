@@ -54,7 +54,11 @@ function centerText(tx, fn)
     return (800/2)-(fn:getWidth(tx)/2)
 end
 
+function ternary(t, y, n)
+    if t then return y else return n end
+end
+
 function versionString()
-    local h = string.format("%d.%d (%s)", PLUMINO_VERSION[1], PLUMINO_VERSION[2], PLUMINO_VERSION_CODENAME)
+    local h = string.format("%d.%d%s (%s)", PLUMINO_VERSION[1], PLUMINO_VERSION[2], ternary(PLUMINO_DEV_BUILD, "-DEV", ""), PLUMINO_VERSION_CODENAME)
     return h
 end

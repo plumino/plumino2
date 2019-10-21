@@ -13,6 +13,10 @@ return {
         aAction = function(self) game:switchState("keyconfig") end
     },
     {
+        name = "Controller configuration menu",
+        aAction = function(self) game:switchState("controllerconfig") end
+    },
+    {
         name = "",
         unselectable = true,
     },

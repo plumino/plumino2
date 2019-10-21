@@ -7,7 +7,10 @@ end
 
 function randomiser.TGM:next()
     -- TGM randomiser
-    local pieces = {"I", "J", "L", "S", "T", "O", "Z"}
+    local pieces = {}
+    for i, j in pairs(rotations[game.rotsys].structure) do
+        table.insert(pieces, i)
+    end
     local roll = pieces[love.math.random(1, #pieces)]
     if roll == "O" and self.firstPiece then
         return self:next()

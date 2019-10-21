@@ -128,7 +128,7 @@ return {
         local CENTER_X = (window.w-tx)/2
         local CENTER_Y = (window.h-ty)/2
 
-        love.graphics.rectangle("fill", CENTER_X, CENTER_Y, tx, ty)
+        love.graphics.rectangle("fill", CENTER_X+game.xMatrixOffset, CENTER_Y+game.yMatrixOffset, tx, ty)
 
         if not game.invisible then
             game.rendermatrix = deepcopy(game.matrix)
@@ -174,7 +174,7 @@ return {
                     else
                         love.graphics.setColor(1, 1, 1, 0)
                     end
-                    love.graphics.draw(game.mino[game.minoSkin], ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x], (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x])
+                    love.graphics.draw(game.mino[game.minoSkin], ((CENTER_X-minoDim)+((x)*minoDim))+game.xOffset[x]+game.xMatrixOffset, (((CENTER_Y)-minoDim)+((y)*minoDim)-((4)*minoDim))+game.yOffset[x]+game.yMatrixOffset)
                 end
             end
 

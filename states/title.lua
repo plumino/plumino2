@@ -1,3 +1,7 @@
+function t(c, y, n)
+    if c then return y else return n end
+end
+
 return {
     init = function(self)
         self.w, self.h, self.m = love.window.getMode()
@@ -65,18 +69,14 @@ return {
         love.graphics.print(self.message, (self.w/2)-(game.font.med:getWidth(self.message)/2), 300)
 
         love.graphics.setFont(game.font.med2)
-        local t = "Press ["..game:prettyKey(game.keyMap.start).."] to begin!"
-        love.graphics.print(t, (self.w/2)-(game.font.med2:getWidth(t)/2), 420)
+        local st = "Press ["..t(controller, game.controllerMap.start:upper(), game:prettyKey(game.keyMap.start)).."] to begin!"
+        love.graphics.print(st, (self.w/2)-(game.font.med2:getWidth(st)/2), 420)
 
-        local c = "Press ["..game:prettyKey(game.keyMap.b).."] for the options menu."
+        local c = "Press ["..t(controller, game.controllerMap.b:upper(), game:prettyKey(game.keyMap.b)).."] for the options menu."
         love.graphics.setFont(game.font.std)
         love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 450)
 
-        local dev = ""
-        if PLUMINO_DEV_BUILD then
-            dev = " <DEV BUILD>"
-        end
-        local ver = string.format("v%s%s", versionString(), dev)
+        local ver = versionString()
         love.graphics.setFont(game.font.med)
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
 

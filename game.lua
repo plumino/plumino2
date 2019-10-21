@@ -33,6 +33,18 @@ game.keyMap = {
     start = "return"
 }
 
+game.controllerMap = {
+    up = "dpup",
+    down = "dpdown",
+    left = "dpleft",
+    right = "dpright",
+    a = "a",
+    b = "b",
+    c = "y",
+    d = "rightshoulder",
+    start = "start"
+}
+
 game.prettyKeys = {
     rshift = "Right SHIFT",
     lshift = "Left SHIFT",
@@ -132,6 +144,8 @@ function game:init(rotation, options)
     for x=1,#self.matrix[1],1 do
         self.yOffset[x] = 0
     end
+
+    self.xMatrixOffset, self.yMatrixOffset = 0, 0
 
     self.piecex=0
     self.piecey=0
@@ -243,6 +257,13 @@ end
 function game:updateKeys()
     for i, j in pairs(game.keyMap) do
         game.keys[i] = love.keyboard.isDown(j)
+    end
+    if controller then
+        for _, e in pairs(controllers) do
+            for i, j in pairs(game.controllerMap) do
+                game.keys[i] = e:isGamepadDown(j)
+            end
+        end
     end
 end
 

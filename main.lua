@@ -1,5 +1,5 @@
-PLUMINO_VERSION = {5, 0}
-PLUMINO_VERSION_CODENAME = 'AV Update'
+PLUMINO_VERSION = {6, 0}
+PLUMINO_VERSION_CODENAME = 'Controller Update'
 
 PLUMINO_DEV_BUILD = false
 
@@ -23,6 +23,7 @@ modeNames = {
 rotationSystems = {
     "ars",
     "srs",
+    "ors",
     "flashlight",
     "incremental"
 }
@@ -136,6 +137,25 @@ screenX = 0
 screenY = 0
 screenCol = {1, 1, 1, 1}
 
+controller = false
+controllers = love.joystick.getJoysticks()
+
+function doControllerCheck()
+    local c, cs = false, love.joystick.getJoysticks()
+
+    for i, pad in ipairs(cs) do
+        c = true
+        print(('Found a controller: %s'):format(pad:getName()))
+    end
+    print(('Controller status: %s'):format(tostring(c)))
+
+    controller, controllers = c, cs
+end
+
+doControllerCheck()
+
+love.joystickadded, love.joystickremoved = doControllerCheck, doControllerCheck
+
 function game:switchState(name, args)
     if not game.states[name] then
         error("Could not switch to state "..name)
@@ -164,7 +184,8 @@ local files = {
     "title",
     "credits",
     "keyconfig",
-    "options"
+    "options",
+    "controllerconfig"
 }
 
 function love.load()
@@ -231,6 +252,13 @@ function love.load()
         else
             local t = json.decode(c)
             game.keyMap = deepcopy(t)
+        end
+        local p, r = love.filesystem.read('controller.psv')
+        if p == nil then
+            print('Controller input load failed. Ignoring.')
+        else
+            local t = json.decode(p)
+            game.controllerMap = deepcopy(t)
         end
     end
 
@@ -310,6 +338,18 @@ function love.keypressed(k, sc, r)
         game.state:keyDown(k, sc, r)
     end
     game:doAltInput()
+end
+
+function love.gamepadpressed(p, b)
+    if game.state and game.state.padDown then
+        game.state:padDown(b)
+    end
+    game:doAltInput()
+end
+function love.gamepadreleased(p, b)
+    if game.state and game.state.padUp then
+        game.state:padUp(b)
+    end
 end
 
 function love.keyreleased(k, sc)
