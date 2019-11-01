@@ -32,17 +32,17 @@ return {
     end,
     update = function(self)
         if self.stopping then return end
-        --local rand, rand2 = love.math.random(), love.math.random()
-        --[[local val = 200
-        local fx, fy = 1/math.cos(love.timer.getTime())*val, 0
+        local rand, rand2 = love.math.random(), love.math.random()
+        local val = 200
+        local fx, fy = math.sin(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
         local a = {self.sx+fx, self.sy+fy}
         if a then
             love.window.setPosition(unpack(a))
         end
 
         screenX = -fx
-        screenY = -fy]]
-        game.xMatrixOffset, game.yMatrixOffset = math.tan(love.timer.getTime()*5)*30, math.cos(love.timer.getTime()*5)*30
+        screenY = -fy
+        --game.xMatrixOffset, game.yMatrixOffset = math.tan(love.timer.getTime()*5)*30, math.cos(love.timer.getTime()*5)*30
     end,
     draw = function(self)
         ui.drawScoreText("Marathon", 0)
