@@ -43,6 +43,8 @@ function skin:load(name)
                 game.bgm[p] = love.audio.newSource(folder.."/bgm/"..f, "stream")
                 game.bgm[p]:setLooping(true)
             end
+        else
+            game.bgm[1] = 'a'
         end
     end
 

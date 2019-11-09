@@ -41,7 +41,9 @@ return {
         end
 
         function self:stopBGM()
-            self.currentbgm:stop()
+            if self.currentbgm then
+                self.currentbgm:stop()
+            end
         end
     end,
     update = function(self, dt)
