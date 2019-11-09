@@ -14,7 +14,7 @@ Cambridge
 
 
 
-[ ASSETS ]
+[ DEFAULT SKIN/ASSETS ]
 - Logo Graphic -
 GlitchyPSI
 

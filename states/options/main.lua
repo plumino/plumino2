@@ -116,7 +116,7 @@ return {
             skin:load(game.skins[game.skinIndex])
         end,
         value = function(self)
-            return game.skins[game.skinIndex]
+            return ('%s (by %s) [%s]'):format(skin.name, skin.author, game.skins[game.skinIndex])
         end
     },
     {

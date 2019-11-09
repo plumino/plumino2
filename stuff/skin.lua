@@ -13,6 +13,10 @@ function skin:load(name)
     local meta = json.decode(mstr)
     print(('Skin metadata load successful! This skin is:\n - %s, by %s'):format(meta.name, meta.author))
 
+    self.meta = meta
+    self.name = meta.name
+    self.author = meta.author
+
     local folder = ('assets/skins/%s'):format(name)
 
     if meta.background then
@@ -58,6 +62,12 @@ function skin:load(name)
             med2 = love.graphics.newFont("assets/font/standard.ttf", 24),
             med3 = love.graphics.newFont("assets/font/standard.ttf", 26)
         }
+    end
+
+    if love.filesystem.getInfo(folder..'/gfx/logo.png', 'file') then
+        game.gfx.logo = love.graphics.newImage(folder..'/gfx/logo.png')
+    else
+        game.gfx.logo = love.graphics.newImage('assets/gfx/logo.png')
     end
 
     game.minoSkin = 1
