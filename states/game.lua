@@ -39,6 +39,10 @@ return {
                 t:play()
             end
         end
+
+        function self:stopBGM()
+            self.currentbgm:stop()
+        end
     end,
     update = function(self, dt)
         if not game.hasRanInit then return end
@@ -232,5 +236,6 @@ return {
     end,
     stop = function(self)
         if game.mode.stop then game.mode:stop() end
+        self:stopBGM()
     end
 }
