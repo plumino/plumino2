@@ -116,7 +116,8 @@ return {
     draw = function(self)
         if game.background[game.currentBackground] then
             love.graphics.setColor(0.6, 0.6, 0.6, 1)
-            love.graphics.draw(game.background[game.currentBackground])
+            local quad = love.graphics.newQuad(0, 0, window.w, window.h, 800, 600) -- VERY NASTY HACK
+            love.graphics.draw(game.background[game.currentBackground], 0, 0, 0, window.w/800, window.h/600)
         end
 
         local minoDim = 16
@@ -187,7 +188,11 @@ return {
                         for x = 1, #h, 1 do
                             if rotations[game.rotsys].structure[next][1][y][x] == 1 then
                                 love.graphics.setColor(unpack(rotations[game.rotsys].colours[next] or {1, 1, 1, 1}))
-                                love.graphics.draw(game.mino[game.minoSkin], ((window.w/2-(minoDim*4))+((x)*minoDim))+((i-1)*75), ((window.h-ty-220)-minoDim)+((y)*minoDim))
+                                local v = 0
+                                if optionFlags.hd then
+                                    v = 50 -- dirty hack
+                                end
+                                love.graphics.draw(game.mino[game.minoSkin], ((window.w/2-(minoDim*4))+((x)*minoDim))+((i-1)*75), ((window.h-ty-210)-minoDim)+((y)*minoDim)-v)
                             end
                         end
                     end

@@ -7,7 +7,7 @@ return {
             state = "Options menu"
         }
 
-        self.menuindex = 1
+        self.menuindex = 2
         self.menustate = 0 -- 0: selecting gamemode, 1: selecting rot
         self.options = (require('states/options/main'))
         self.rotations = b
@@ -44,7 +44,7 @@ return {
                 self.menuindex = self.menuindex + 1
             end
             if self.menuindex > currlen then
-                self.menuindex = 1
+                self.menuindex = 2
             end
         end
         if game.justPressed.up then

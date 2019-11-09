@@ -1,0 +1,41 @@
+{
+    "name": "Default plumino^2 skin",
+    "author": "ry00001",
+    "background": [
+        "bg1.png",
+        "bg2.png",
+        "bg3.png",
+        "bg4.png",
+        "bg5.png",
+        "bg6.png",
+        "bg7.png",
+        "bg8.png",
+        "bg9.png",
+        "bg10.png",
+        "bg11.png",
+        "bg12.png",
+        "bg13.png"
+    ],
+    "audio": {
+        "sfx": {
+            "gameover": "gameover.wav",
+            "ready": "ready.wav",
+            "go": "go.wav",
+            "levelup": "levelup.ogg",
+            "lock": "lock.wav",
+            "credit": "credit.wav"
+        },
+        "clear": [
+            "1.wav", "2.wav", "3.wav", "4.wav"
+        ]
+    },
+    "mino": [
+        {"file": "1.png", "name": "Default"},
+        {"file": "2.png", "name": "Bricks"},
+        {"file": "3.png", "name": "Retro"},
+        {"file": "agc.png", "name": "Classic"},
+        {"file": "flat.png", "name": "Flat"},
+        {"file": "flat_bright.png", "name": "Flat (bright)"},
+        {"file": "2_alt.png", "name": "Bricks (alternate)"}
+    ]
+}

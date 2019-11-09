@@ -112,14 +112,18 @@ function game:init(rotation, options)
         lineAre = 20
     }
 
+    self.matrixDimX, self.matrixDimY = 10, 20
+    self.playfieldDimensions = {x=self.matrixDimX, y=self.matrixDimY}
+    ui.redefineVariables()
+
     self.invisible = false
 
     self.invisrows = options.invisrows or 4
 
     self.matrix = {}
-    for y=1,20+self.invisrows,1 do
+    for y=1,self.matrixDimY+self.invisrows,1 do
         self.matrix[y] = {}
-        for x=1,10,1 do
+        for x=1,self.matrixDimX,1 do
             self.matrix[y][x] = false
         end
     end
@@ -128,9 +132,9 @@ function game:init(rotation, options)
     self.movereset = false
 
     self.rendermatrix = {} -- used for rendering blocks
-    for y=1,20+self.invisrows,1 do
+    for y=1,self.matrixDimY+self.invisrows,1 do
         self.rendermatrix[y] = {}
-        for x=1,10,1 do
+        for x=1,self.matrixDimX,1 do
             self.rendermatrix[y][x] = false
         end
     end

@@ -24,9 +24,9 @@ return {
             400, 800, 1400, 2000, 3500, 5500, 8000, 12000, 16000, 22000, 30000, 40000, 52000, 66000, 82000, 100000, 120000
         }
         self.gradenames = {
-            "8", "7", "6", "5", "4", "3", "2", "1", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "GM"
+            "9", "8", "7", "6", "5", "4", "3", "2", "1", "S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "GM"
         }
-        self.grade = 0
+        self.grade = 1
 
         game.speeds = {
             gravity = self.gravity[self.gravpointer]/256,
@@ -52,7 +52,7 @@ return {
             a = self.grades[self.grade]
         end
         ui.drawScoreText(a, 5)
-        ui.drawScoreText('Points', 6)
+        ui.drawScoreText('points', 6)
 
         ui.drawScoreText('Level', 8)
         ui.drawScoreText(self.level .. '/' .. self.nextsection, 9)

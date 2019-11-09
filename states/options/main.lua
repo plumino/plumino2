@@ -9,6 +9,10 @@ end
 
 return {
     {
+        name = "  [Controller/keyboard options]",
+        unselectable = true
+    },
+    {
         name = "Key configuration menu (press A)",
         aAction = function(self) game:switchState("keyconfig") end
     },
@@ -19,6 +23,25 @@ return {
     {
         name = "",
         unselectable = true,
+    },
+    {
+        name = "  [Video options]",
+        unselectable = true,
+    },
+    {
+        name = "HD mode: {v}",
+        aAction = function(self)
+            optionFlags.hd = not optionFlags.hd
+            local w, h = 1280, 720
+            if not optionFlags.hd then
+                w, h = 800, 600
+            end
+            love.window.setMode(w, h, {})
+            screen = love.graphics.newCanvas()
+            window.w, window.h = w, h
+            ui.redefineVariables()
+        end,
+        value = function(self) return v(optionFlags.hd) end
     },
     {
         name = "Max framerate: {v} FPS",
@@ -44,6 +67,10 @@ return {
     {
         name = "",
         unselectable = true
+    },
+    {
+        name = "  [Game options]",
+        unselectable = true,
     },
     {
         name = "Sonic drop (TGM-style): {v}",
@@ -73,8 +100,32 @@ return {
         end
     },
     {
+        name = "Game skin: {v}",
+        lAction = function(self)
+            game.skinIndex = game.skinIndex - 1
+            if game.skinIndex < 1 then
+                game.skinIndex = #game.skins
+            end
+            skin:load(game.skins[game.skinIndex])
+        end,
+        rAction = function(self)
+            game.skinIndex = game.skinIndex + 1
+            if game.skinIndex > #game.skins then
+                game.skinIndex = 1
+            end
+            skin:load(game.skins[game.skinIndex])
+        end,
+        value = function(self)
+            return game.skins[game.skinIndex]
+        end
+    },
+    {
         name = "",
         unselectable = true
+    },
+    {
+        name = "  [Misc]",
+        unselectable = true,
     },
     {
         name = "Credits",

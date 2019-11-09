@@ -1,5 +1,5 @@
-PLUMINO_VERSION = {6, 0}
-PLUMINO_VERSION_CODENAME = 'Controller Update'
+PLUMINO_VERSION = {7, 0}
+PLUMINO_VERSION_CODENAME = 'Skin Update'
 
 PLUMINO_DEV_BUILD = false
 
@@ -37,11 +37,12 @@ randomisers = {
 
 piece = {}
 
-require "util"
+json = require "lib/json"
 inspect = require "lib/inspect"
+require "util"
+require "stuff/skin"
 require "game"
 require "stuff/ui"
-local json = require "lib/json"
 require "states/options/main"
 
 local libstatus, liberr = pcall(function() discord = require "lib/discordRPC" end)
@@ -132,6 +133,11 @@ game.clearaudio = {
     "1.wav", "2.wav", "3.wav", "4.wav"
 }
 
+game.skins = {
+    "Default"
+}
+game.skinIndex = 1
+
 screen = love.graphics.newCanvas() -- testing this
 screenX = 0
 screenY = 0
@@ -209,38 +215,21 @@ function love.load()
         require("./randomiser/"..i)
     end
 
+    -- SKIN SYSTEM GOES HERE
+
     for p, f in pairs(game.gfx) do -- handle gfx loading
         game.gfx[p] = love.graphics.newImage("assets/gfx/"..f)
     end
 
-    for p, f in ipairs(game.background) do -- handle gfx loading
-        game.background[p] = love.graphics.newImage("assets/bg/"..f)
-    end
-
-    for p, f in pairs(game.sfx) do -- handle sfx loading
-        game.sfx[p] = love.audio.newSource("assets/sfx/"..f, "static")
-    end
-
-    for p, f in ipairs(game.clearaudio) do -- handle sfx loading
-        game.clearaudio[p] = love.audio.newSource("assets/sfx/clear/"..f, "static")
-    end
-
-    if love.filesystem and love.filesystem.getInfo then -- fix crash on some platforms
-        if love.filesystem.getInfo("assets/bgm", "directory") then
-            for p, f in ipairs(game.bgm) do -- handle bgm loading
-                game.bgm[p] = love.audio.newSource("assets/bgm/"..f, "stream")
-                game.bgm[p]:setLooping(true)
-            end
+    local fs = love.filesystem.getDirectoryItems('assets/skins')
+    for _, i in ipairs(fs) do
+        print('found skin: '..i)
+        if i ~= 'Default' then
+            table.insert(game.skins, i)
         end
     end
 
-    if love.filesystem and love.filesystem.getInfo then -- fix crash on some platforms
-        if love.filesystem.getInfo("assets/gfx/mino", "directory") then
-            for p, f in ipairs(game.mino) do -- handle bgm loading
-                game.mino[p] = love.graphics.newImage("assets/gfx/mino/"..f)
-            end
-        end
-    end
+    skin:load('Default')
 
     local runInputConfig = false
 
