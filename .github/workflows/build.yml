@@ -11,8 +11,8 @@ jobs:
     - uses: actions/checkout@v1
     - name: Create a .love file
       run: |
-      do_not_archive=README.md .gitignore .git/
-      zip -r p2.love . -x $do_not_archive
+        do_not_archive=README.md .gitignore .git/
+        zip -r p2.love . -x $do_not_archive
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
