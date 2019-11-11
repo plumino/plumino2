@@ -9,11 +9,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Zip the game's folder
-      run: zip -r p2.love . -x "README.md .gitignore .git"
+    - name: Create a .love file
+      run: |
+      do_not_archive=README.md .gitignore .git/
+      zip -r p2.love . -x $do_not_archive
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: plumino2.love
+        name: plumino2-universal
         path: p2.love
 
