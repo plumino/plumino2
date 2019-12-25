@@ -80,7 +80,7 @@ return {
         love.graphics.setFont(game.font.med)
         love.graphics.print(ver, (window.w-(game.font.med:getWidth(ver)))-20, (window.h-game.font.med:getHeight(ver))-20)
 
-        local notice = "Plumino^2, by ry00001 and others, 2019"
+        local notice = "Plumino^2, by ry00001 and others, 2019-2020"
         love.graphics.print(notice, 20, (window.h-game.font.med:getHeight(notice))-20)
 
         love.graphics.setColor(0, 0, 0, self.alpha/100)

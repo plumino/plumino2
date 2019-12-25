@@ -50,13 +50,22 @@ Oshisaure
 0xFC963F18DC21
 Akari
 
-Thank you for playing.
+I did not expect this game to get this far.
+This started as a small passion project, then
+quickly evolved into so much more.
+
+If you're playing this game for the first time,
+or returning to it after a while to see what's new,
+or even going for some cool high scores,
+from the bottom of my heart,
+
+thank you for playing.
 
 
 
 Produced by
 Plumino Team
-2019]]
+2019-2020]]
 
         self.lines = {}
         for s in self.credits:gmatch("([^\n]*)\n?") do
