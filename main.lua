@@ -45,7 +45,16 @@ require "game"
 require "stuff/ui"
 require "states/options/main"
 
+local logistatus, logierr = pcall(function() logitech = require "lib/logitech" end) -- experimental
+
 local libstatus, liberr = pcall(function() discord = require "lib/discordRPC" end)
+
+if logistatus then
+    logitech = require "lib/logitech"
+else
+    print("[WARNING!] Could not load Logitech lighting library: "..logierr)
+    print("[WARNING!] This is normal if using the .love file.")
+end
 
 if libstatus then
     discord = require "lib/discordRPC"
@@ -194,9 +203,29 @@ local files = {
     "controllerconfig"
 }
 
+gameToLogitechKeys = {
+    up = "ARROW_UP",
+    down = "ARROW_DOWN",
+    left = "ARROW_LEFT",
+    right = "ARROW_RIGHT",
+    ["return"] = "ENTER"
+}
+
 function love.load()
     if discord then
         discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
+    end
+
+    if logitech then
+        logitech.init()
+        love.timer.sleep(0.1) -- give it a sec to init
+        print('[Logitech] Initialised successfully? '..tostring(logitech.initialised))
+
+        for j, i in pairs(game.keyMap) do
+            local key = gameToLogitechKeys[i] or i:upper()
+            print(('Setting %s to on'):format(key))
+            logitech.setLightingForKey(key, 100, 100, 100)
+        end
     end
 
     for _, i in pairs(files) do -- handle state loading
