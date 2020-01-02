@@ -5,7 +5,7 @@ IGNORE=(".git/\\*" ".github/\\*" ".gitignore" ".vscode/\\*" "compile.sh" "README
 
 FLAGS="-r $OUT ."
 for ignored in ${IGNORE[@]}; do
-    FLAGS="$FLAGS --exclude=${ignored}"
+    FLAGS="$FLAGS --exclude=\"${ignored}\""
 done
 
 echo compiling with: $FLAGS
