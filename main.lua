@@ -336,6 +336,11 @@ function love.quit()
     if discord then
         discord.shutdown()
     end
+
+    if logitech then
+        print('[Logitech] Shutting down.')
+        logitech.shutdown()
+    end
 end
 
 if discord then
