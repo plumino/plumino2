@@ -34,7 +34,7 @@ return {
         if self.stopping then return end
         local rand, rand2 = love.math.random(), love.math.random()
         local val = 200
-        local fx, fy = math.sin(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
+        local fx, fy = math.tan(love.timer.getTime())*val, math.cos(love.timer.getTime())*val
         local a = {self.sx+fx, self.sy+fy}
         if a then
             love.window.setPosition(unpack(a))
