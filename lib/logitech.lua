@@ -27,7 +27,12 @@ bool LogiLedStopEffectsOnKey(int key);
 void LogiLedShutdown();
 ]]
 
-logitech.lib = ffi.load('sdk_legacy_led_x86')
+local dll = 'sdk_legacy_led_x86'
+if ffi.arch == 'x64' then
+    print('[Logitech] 64-bit system detected. Loading x64 DLL.')
+    dll = 'sdk_legacy_led_x64'
+end
+logitech.lib = ffi.load(dll)
 
 function logitech.init()
     logitech.initialised = logitech.lib.LogiLedInit()

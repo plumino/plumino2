@@ -51,6 +51,9 @@ return {
                 if love.filesystem then
                     local s, m = love.filesystem.write("keys.psv", json.encode(self.newMap))
                 end
+                killLighting()
+                love.timer.sleep(0.1)
+                startupLightEffectThread:start(game.keyMap, gameToLogitechKeys)
                 self.keyTimer = 90
                 return
             end

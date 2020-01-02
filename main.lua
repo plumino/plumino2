@@ -1,5 +1,5 @@
-PLUMINO_VERSION = {7, 0}
-PLUMINO_VERSION_CODENAME = 'Skin Update'
+PLUMINO_VERSION = {7, 1}
+PLUMINO_VERSION_CODENAME = 'Light Update'
 
 PLUMINO_DEV_BUILD = false
 
@@ -211,21 +211,29 @@ gameToLogitechKeys = {
     ["return"] = "ENTER"
 }
 
+local threadCode = [[
+require 'love.timer'
+local keys, gameToLogitechKeys = ...
+
+for j, i in pairs(keys) do
+    local key = gameToLogitechKeys[i] or i:upper()
+    print(('[Thread] Setting %s to on'):format(key))
+    love.thread.getChannel('lights'):push({key, 100, 100, 100})
+    love.timer.sleep(0.2)
+end
+]]
+
+startupLightEffectThread = love.thread.newThread(threadCode)
+
+function killLighting()
+    for _, i in pairs(logitech.keys) do
+        logitech.setLightingForKey(i, 0, 0, 0)
+    end
+end
+
 function love.load()
     if discord then
         discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
-    end
-
-    if logitech then
-        logitech.init()
-        love.timer.sleep(0.1) -- give it a sec to init
-        print('[Logitech] Initialised successfully? '..tostring(logitech.initialised))
-
-        for j, i in pairs(game.keyMap) do
-            local key = gameToLogitechKeys[i] or i:upper()
-            print(('Setting %s to on'):format(key))
-            logitech.setLightingForKey(key, 100, 100, 100)
-        end
     end
 
     for _, i in pairs(files) do -- handle state loading
@@ -280,6 +288,13 @@ function love.load()
         end
     end
 
+    if logitech then
+        logitech.init()
+        love.timer.sleep(0.1) -- give it a sec to init
+        print('[Logitech] Initialised successfully? '..tostring(logitech.initialised))
+        startupLightEffectThread:start(game.keyMap, gameToLogitechKeys)
+    end
+
     if runInputConfig then
         game:switchState("keyconfig", {"splash"})
     else
@@ -288,6 +303,11 @@ function love.load()
 end
 
 function love.update(dt)
+    local lightMessage = love.thread.getChannel('lights'):pop()
+    if lightMessage then
+        logitech.setLightingForKey(unpack(lightMessage))
+    end
+
     game:updateKeys()
     game:checkJustPressed()
 
