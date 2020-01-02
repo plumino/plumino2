@@ -9,9 +9,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Create a .love file
+    - name: Build game
       run: |
-        zip -r p2.love . -x README.md -x .gitignore -x .git/\* -x .vscode/\* -x .github/\*
+        ./compile.sh
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
       with:
