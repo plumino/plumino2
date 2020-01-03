@@ -40,6 +40,9 @@ NullNoname/NullpoMino Audio Team
 Oshisaure
 0xFC963F18DC21
 
+- Continuous Integration help/development -
+LewisTehMinerz
+
 - Inspiration -
 Arika Co. Ltd.
 Elzed

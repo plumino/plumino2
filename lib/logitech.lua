@@ -1,7 +1,11 @@
 --[[
+    lua-logilights-p2 v1.0
+    by ry00001, 2020
+
     Logitech Lightsync wrapper for LuaJIT/Love2D applications
+    https://github.com/ry00001/lua-logilights
     
-    Created for Oshisaure by ry00001, 2020
+    Created for Oshisaure
 ]]
 
 local logitech = {}
@@ -28,25 +32,30 @@ void LogiLedShutdown();
 ]]
 
 local dll = 'sdk_legacy_led_x86'
+
 if ffi.arch == 'x64' then
     print('[Logitech] 64-bit system detected. Loading x64 DLL.')
     dll = 'sdk_legacy_led_x64'
 end
+
 logitech.lib = ffi.load(dll)
 
 function logitech.init()
     logitech.initialised = logitech.lib.LogiLedInit()
     return logitech.initialised
 end
+
 function logitech.setLightingForKey(key, r, g, b)
     if type(key) == 'string' then
         key = logitech.keys[key]
     end
     return logitech.lib.LogiLedSetLightingForKeyWithKeyName(key, r, g, b)
 end
+
 function logitech.setLighting(r, g, b)
     return logitech.lib.LogiLedSetLighting(r, g, b)
 end
+
 function logitech.shutdown()
     logitech.lib.LogiLedShutdown()
 end
