@@ -140,12 +140,12 @@ function game:init(rotation, options)
     end
 
     self.xOffset = {}
-    for x=1,#self.matrix[1],1 do
+    for x=1,99999,1 do
         self.xOffset[x] = 0
     end
 
     self.yOffset = {}
-    for x=1,#self.matrix[1],1 do
+    for x=1,99999,1 do
         self.yOffset[x] = 0
     end
 

@@ -25,13 +25,15 @@ rotationSystems = {
     "srs",
     "ors",
     "flashlight",
-    "incremental"
+    "incremental",
+    "h"
 }
 -- EDIT THIS TABLE TO LOAD ROTATION SYSTEMS.
 
 randomisers = {
     "tgm",
-    "onlyi"
+    "onlyi",
+    "bag"
 }
 -- EDIT THIS TABLE TO LOAD RANDOMISERS.
 

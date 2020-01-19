@@ -1,16 +1,16 @@
 local BLANK = {0, 0, 0, 0}
 
-rotations.SRS = {
-    name = "Super Rotation System",
+rotations.hRS = {
+    name = "h",
     alwayswallkick = true,
-    preferredRandom = "TGM",
+    preferredRandom = "BAG",
     credit = {
         design = "The Tetris Company Ltd.",
         impl = "ry00001"
     }
 }
 
-rotations.SRS.structure = {
+rotations.hRS.structure = {
     I = { -- *WHY* IS THE I PIECE A 5x5, TTC PLS
         {{0, 0, 0, 0},
          {1, 1, 1, 1},
@@ -59,9 +59,21 @@ rotations.SRS.structure = {
     },
     O = {
         {{0, 0, 0, 0},
-         {0, 1, 1, 0},
-         {0, 1, 1, 0},
-         {0, 0, 0, 0}}
+         {0, 0, 0, 0},
+         {1, 1, 0, 0},
+         {1, 1, 0, 0}},
+        {{1, 1, 0, 0},
+         {1, 1, 0, 0},
+         {0, 0, 0, 0},
+         {0, 0, 0, 0}},
+        {{0, 0, 1, 1},
+         {0, 0, 1, 1},
+         {0, 0, 0, 0},
+         {0, 0, 0, 0}},
+        {{0, 0, 0, 0},
+         {0, 0, 0, 0},
+         {0, 0, 1, 1},
+         {0, 0, 1, 1}}
     },
     S = {
         {{0, 1, 1},
@@ -107,7 +119,7 @@ rotations.SRS.structure = {
     }
 }
 
-rotations.SRS.colours = {
+rotations.hRS.colours = {
     I = hue(180),
     J = hue(240),
     L = hue(30),
@@ -143,7 +155,7 @@ local names = { -- Lua pls
     "Z", "O", "T", "H"
 }
 
-function rotations.SRS:wallkick(piece, a, b)
+function rotations.hRS:wallkick(piece, a, b)
     if a == 0 then
         a = 4
     end
@@ -165,16 +177,16 @@ function rotations.SRS:wallkick(piece, a, b)
         offset = O
     end
     local kicks = offset[names[a] .. names[b]]
-    for _, kick in ipairs(kicks or {{0,0}}) do
-        ax = game.piecex + kick[1]
-        ay = game.piecey + (kick[2] * -1)
-        if not game:isColliding(game.piece.type[b], ax, ay) then
-            return false, kick[1], kick[2] * -1
-        end
-    end
-    return true, 0, 0
+    -- for _, kick in ipairs(kicks or {{0,0}}) do
+    --     ax = game.piecex + kick[1]
+    --     ay = game.piecey + (kick[2] * -1)
+    --     if not game:isColliding(game.piece.type[b], ax, ay) then
+    --         return false, kick[1], kick[2] * -1
+    --     end
+    -- end
+    return false, 0, 0
 end
 
-function rotations.SRS:getSpawnLocation()
+function rotations.hRS:getSpawnLocation()
     return 3, game.invisrows - 2
 end

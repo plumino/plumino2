@@ -146,7 +146,7 @@ return {
         if game.piece.active and game.are == 0 and game.willTrackTime then
             for y, j in ipairs(game.piece.type[game.piece.state] or {}) do
                 for x, k in ipairs(j) do
-                    if k == 1 then
+                    if k == 1 and y+game.piecey <= game.playfieldDimensions.y+game.invisrows and x+game.piecex <= game.playfieldDimensions.x then
                         game.rendermatrix[y+game.piecey][x+game.piecex] = game.piece.name
                     end
                 end
@@ -157,7 +157,7 @@ return {
             if game.drawGhost and not self.overrideMatrix and game.piece.active then
                 for y, j in ipairs(game.piece.type[game.piece.state]) do
                     for x, h in ipairs(j) do
-                        if h == 1 and not game.rendermatrix[game:getGhostPosition()+y][game.piecex+x] then
+                        if h == 1 and y+game.piecey <= game.playfieldDimensions.y+game.invisrows and x+game.piecex <= game.playfieldDimensions.x and not game.rendermatrix[game:getGhostPosition()+y][game.piecex+x] then
                             game.rendermatrix[game:getGhostPosition()+y][game.piecex+x] = 'GHOST'
                         end
                     end
