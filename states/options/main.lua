@@ -1,6 +1,7 @@
 optionFlags = {
     hd = false,
-    sonicDrop = false
+    sonicDrop = false,
+    swapRotation = false
 }
 
 local function v(a)
@@ -80,6 +81,13 @@ return {
         value = function(self)
             return v(optionFlags.sonicDrop)
         end
+    },
+    {
+        name = "Swap rotation buttons (World Rule style): {v}",
+        aAction = function(self)
+            optionFlags.swapRotation = not optionFlags.swapRotation
+        end,
+        value = function(self) return v(optionFlags.swapRotation) end
     },
     {
         name = "Block skin: {v}",

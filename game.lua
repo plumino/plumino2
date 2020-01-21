@@ -387,7 +387,11 @@ function game:doRotation(b1, b2, isARE)
     local py = self.piecey
     local state = self.piece.state
     local hasRotated = false
-    if b1 or self.justPressed.b then
+    local r1, r2 = self.justPressed.b, (self.justPressed.a or self.justPressed.c)
+    if optionFlags.swapRotation then
+        r1, r2 = r2, r1
+    end
+    if b1 or r1 then
         if self:isColliding(brot) or rotations[self.rotsys].alwayswallkick then
             local failed, modx, mody = rotations[self.rotsys]:wallkick(brot, self.piece.state, self.piece.state+1)
             if failed then return end
@@ -398,7 +402,7 @@ function game:doRotation(b1, b2, isARE)
         if not self.piece.type[state] then state = 1 end
         hasRotated = true
     end
-    if b2 or (self.justPressed.a or self.justPressed.c) then
+    if b2 or r2 then
         if self:isColliding(arot) or rotations[self.rotsys].alwayswallkick then
             local failed, modx, mody = rotations[self.rotsys]:wallkick(arot, self.piece.state, self.piece.state-1)
             if failed then return end
