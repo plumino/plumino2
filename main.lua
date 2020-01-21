@@ -1,5 +1,5 @@
-PLUMINO_VERSION = {7, 1}
-PLUMINO_VERSION_CODENAME = 'Light Update'
+PLUMINO_VERSION = {8, 0}
+PLUMINO_VERSION_CODENAME = 'Plugin Update'
 
 PLUMINO_DEV_BUILD = false
 
@@ -36,6 +36,11 @@ randomisers = {
     "bag"
 }
 -- EDIT THIS TABLE TO LOAD RANDOMISERS.
+
+pluginNames = {
+    "mix"
+}
+-- you know the drill
 
 piece = {}
 
@@ -129,6 +134,7 @@ game.minoName = {
 }
 
 modes = {}
+plugins = {}
 rotations = {}
 randomiser = {}
 
@@ -253,6 +259,11 @@ function love.load()
 
     for _, i in pairs(randomisers) do -- handle randomiser loading
         require("./randomiser/"..i)
+    end
+    
+    for _, i in pairs(pluginNames) do
+        plugins[i] = require('./plugins/'..i)
+        plugins[i].enabled = false
     end
 
     -- SKIN SYSTEM GOES HERE

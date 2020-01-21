@@ -17,6 +17,18 @@ function hue(c) -- shamelessly stolen from oshi's game (sorry if youre reading t
     return h
 end
 
+function mix(x, y, a)
+    return x * (1-a) + y * a
+end
+
+function mix_v(x, y, a)
+    local nt = {}
+    for i, j in ipairs(x) do
+        nt[i] = mix(j, y[i], a)  
+    end
+    return nt
+end
+
 function deepcopy(orig) -- thanks lua-users
     local orig_type = type(orig)
     local copy

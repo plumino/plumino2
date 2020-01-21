@@ -174,6 +174,11 @@ return {
                         if game.mode.getPieceColour then
                             colour = game.mode:getPieceColour(x, y, d)
                         end
+                        for pi, pj in pairs(plugins) do
+                            if pj.enabled and pj.getPieceColour then
+                                colour = pj:getPieceColour(x, y, d)
+                            end
+                        end
                         if d == "GHOST" then
                             colour = {1, 1, 1, 0.5}
                         end

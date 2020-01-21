@@ -22,10 +22,18 @@ return {
             count2 = count2 + 1
             b[count2] = i
         end
+        local p = {}
+        local c3 = 0
+        for i, j in pairs(plugins) do
+            c3 = c3 + 1
+            p[c3] = i
+        end
         self.rotations = b
         self.modelen = count1
         self.rotlen = count2
+        self.p = p
         self.modesel = nil
+        self.rotsel = nil
     end,
     draw = function(self)
         love.graphics.setFont(game.font.med2)
@@ -34,12 +42,18 @@ return {
         if self.menustate == 1 then
             text = "Select rotation system"
         end
+        if self.menustate == 2 then
+            text = "Select plugins"
+        end
         love.graphics.print(text, 20, 20)
 
         local count = 0
         local thing = self.modes
         if self.menustate == 1 then
             thing = self.rotations
+        end
+        if self.menustate == 2 then
+            thing = plugins
         end
         for i, j in pairs(thing) do
             count = count + 1
@@ -50,8 +64,10 @@ return {
             love.graphics.setFont(game.font.med)
             if self.menustate == 0 then 
                 love.graphics.print(tappend .. modes[j].name, 25, 35 + (count*25) + (game.font.med:getHeight(tappend..modes[j].name)))
-            else
+            elseif self.menustate == 1 then
                 love.graphics.print(tappend .. rotations[j].name, 25, 35 + (count*25) + (game.font.med:getHeight(tappend..rotations[j].name)))
+            else
+                love.graphics.print(tappend .. j.name .. ': ' .. ternary(j.enabled, 'on', 'off'), 25, 35 + (count*25) + (game.font.med:getHeight(tappend..j.name)))
             end
         end
     end,
@@ -59,6 +75,9 @@ return {
         local currlen = self.modelen
         if self.menustate == 1 then
             currlen = self.rotlen
+        end
+        if self.menustate == 2 then
+            currlen = #plugins
         end
         if game.justPressed.down then
             self.menuindex = self.menuindex + 1
@@ -80,8 +99,17 @@ return {
                 return
             end
             if self.menustate == 1 then
-                game:switchState("game", {self.modesel, self.rotations[self.menuindex]})
+                self.rotsel = self.rotations[self.menuindex]
+                self.menuindex = 1
+                self.menustate = 2
+                return
             end
+            if self.menustate == 2 then
+                plugins[self.p[self.menuindex]].enabled = not plugins[self.p[self.menuindex]].enabled
+            end
+        end
+        if game.justPressed.start and self.menustate == 2 then
+            game:switchState("game", {self.modesel, self.rotsel})
         end
         if game.justPressed.b then
             if self.menustate == 1 then
