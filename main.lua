@@ -228,6 +228,7 @@ end
 startupLightEffectThread = love.thread.newThread(threadCode)
 
 function killLighting()
+    if not logitech then return end
     for _, i in pairs(logitech.keys) do
         logitech.setLightingForKey(i, 0, 0, 0)
     end
@@ -306,7 +307,7 @@ end
 
 function love.update(dt)
     local lightMessage = love.thread.getChannel('lights'):pop()
-    if lightMessage then
+    if lightMessage and logitech then
         logitech.setLightingForKey(unpack(lightMessage))
     end
 
