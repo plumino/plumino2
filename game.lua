@@ -157,6 +157,10 @@ function game:init(rotation, options)
     self.won = false
     self.sections = {}
 
+    self.heldPiece = nil
+    self.allowHold = true
+    self.infiniteHold = false
+
     self.piece = nil
     self.nextQueue = {}
     for i=1,6 do
@@ -424,7 +428,25 @@ function game:doInput()
         if self.justPressed.right and not self:isColliding(nil, self.piecex+1) then
             self.piecex = self.piecex + 1
         end
+        if self.justPressed.d and self.piece.active then
+            self:doHold()
+        end
     end
+end
+
+function game:doHold() -- oh boy i'm really doing this
+    if not self.allowHold then return end
+    if not self.heldPiece then
+        self.heldPiece = self.piece.name
+        self:next()
+        return
+    end
+    if not self.infiniteHold then
+        self.allowHold = false
+    end
+    local h = self.heldPiece
+    self.heldPiece = self.piece.name
+    self.piece = self:buildPiece(h)
 end
 
 function game:doAltInput()
@@ -478,6 +500,7 @@ function game:lockPiece()
     end
     self.gravitycounter = 0
     self.piece.active = false
+    self.allowHold = true
     local r = self.piece.type[self.piece.state]
     for y = 1, #self.piece.type[self.piece.state], 1 do
         for x = 1, #self.piece.type[self.piece.state], 1 do

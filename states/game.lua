@@ -204,6 +204,22 @@ return {
                     end
                 end
             end
+
+            if game.heldPiece then
+                local h = rotations[game.rotsys].structure[game.heldPiece][1]
+                for y = 1, #h, 1 do
+                    for x = 1, #h, 1 do
+                        if rotations[game.rotsys].structure[game.heldPiece][1][y][x] == 1 then
+                            love.graphics.setColor(unpack(rotations[game.rotsys].colours[game.heldPiece] or {1, 1, 1, 1}))
+                            local v = 0
+                            if optionFlags.hd then
+                                v = 50 -- dirty hack
+                            end
+                            love.graphics.draw(game.mino[game.minoSkin], ((window.w/2-(minoDim*4))+((x)*minoDim)-(6*minoDim)), ((window.h-ty-210)-minoDim)+((y)*minoDim)-v)
+                        end
+                    end
+                end
+            end
         end
 
         local RIGHT_OF_FIELD = (CENTER_X+(CENTER_X/2))+10
