@@ -77,7 +77,7 @@ return {
             currlen = self.rotlen
         end
         if self.menustate == 2 then
-            currlen = #plugins
+            currlen = #self.p
         end
         if game.justPressed.down then
             self.menuindex = self.menuindex + 1
@@ -87,7 +87,7 @@ return {
         end
         if game.justPressed.up then
             self.menuindex = self.menuindex - 1
-            if self.menuindex <= 0 then
+            if self.menuindex < 1 then
                 self.menuindex = currlen
             end
         end

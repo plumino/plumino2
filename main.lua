@@ -1,5 +1,5 @@
-PLUMINO_VERSION = {8, 0}
-PLUMINO_VERSION_CODENAME = 'Plugin Update'
+PLUMINO_VERSION = {9, 0}
+PLUMINO_VERSION_CODENAME = 'Replay Update'
 
 PLUMINO_DEV_BUILD = false
 
@@ -26,14 +26,16 @@ rotationSystems = {
     "ors",
     "flashlight",
     "incremental",
-    "h"
+    "h",
+    "bruh"
 }
 -- EDIT THIS TABLE TO LOAD ROTATION SYSTEMS.
 
 randomisers = {
     "tgm",
     "onlyi",
-    "bag"
+    "bag",
+    "memoryless"
 }
 -- EDIT THIS TABLE TO LOAD RANDOMISERS.
 
@@ -208,7 +210,8 @@ local files = {
     "credits",
     "keyconfig",
     "options",
-    "controllerconfig"
+    "controllerconfig",
+    "replay"
 }
 
 gameToLogitechKeys = {
@@ -240,7 +243,7 @@ function killLighting()
     end
 end
 
-function love.load()
+function love.load(args)
     if discord then
         discord.initialize("585884186188054535", true) -- DISCORD RICH PRESENCE
     end
@@ -309,6 +312,11 @@ function love.load()
         startupLightEffectThread:start(game.keyMap, gameToLogitechKeys)
     end
 
+    if args[1] then
+        game:switchState('replay', {args[1], true})
+        return
+    end
+
     if runInputConfig then
         game:switchState("keyconfig", {"splash"})
     else
@@ -322,6 +330,9 @@ function love.update(dt)
         logitech.setLightingForKey(unpack(lightMessage))
     end
 
+    if game.playing and game.replayMode then
+        game:updateReplayKeys()
+    end
     game:updateKeys()
     game:checkJustPressed()
 
@@ -391,6 +402,7 @@ end
 
 function love.keypressed(k, sc, r)
     --game:keyDown(k, sc, r)
+    game:replayKeyDown(k, sc, r)
     if game.state and game.state.keyDown then
         game.state:keyDown(k, sc, r)
     end
@@ -411,6 +423,7 @@ end
 
 function love.keyreleased(k, sc)
     --game:keyUp(k, sc)
+    game:replayKeyUp(k, sc)
     if game.state and game.state.keyUp then
         game.state:keyUp(k, sc)
     end

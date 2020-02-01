@@ -57,6 +57,9 @@ return {
         if game.justPressed.b then
             game:switchState("options")
         end
+        if game.justPressed.c then
+            game:switchState("replay", {"_last.prv"})
+        end
     end,
     draw = function(self)
         love.graphics.clear(0.1, 0.1, 0.1)
@@ -72,7 +75,7 @@ return {
         local st = "Press ["..t(controller, game.controllerMap.start:upper(), game:prettyKey(game.keyMap.start)).."] to begin!"
         love.graphics.print(st, (self.w/2)-(game.font.med2:getWidth(st)/2), 420)
 
-        local c = "Press ["..t(controller, game.controllerMap.b:upper(), game:prettyKey(game.keyMap.b)).."] for the options menu."
+        local c = "Press ["..t(controller, game.controllerMap.b:upper(), game:prettyKey(game.keyMap.b)).."] for the options menu, press ["..t(controller, game.controllerMap.c:upper(), game:prettyKey(game.keyMap.c)).."] to watch your latest game."
         love.graphics.setFont(game.font.std)
         love.graphics.print(c, (window.w/2)-(game.font.std:getWidth(c)/2), 450)
 

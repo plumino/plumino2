@@ -2,7 +2,8 @@ local inspect = require "lib/inspect"
 
 return {
     init = function(self, arg)
-        game:loadMode(arg[1], arg[2])
+        game:loadReplay(arg[1])
+        self.quitAfterPlaying = arg[2]
 
         self.rpArg = arg
 
@@ -13,11 +14,6 @@ return {
         self.readyGoStage = 1
         self.readyGoSound = {game.sfx.ready, game.sfx.go}
         for _, j in ipairs(self.readyGoSound) do j:setVolume(0.8) end
-
-        self.creditstate = 1
-        self.drawthecredits = false
-        self.creditspeed = 120
-        self.credittimer = self.creditspeed
 
         -- game over
         self.gameovertimer = 10
@@ -51,7 +47,11 @@ return {
 
         -- input
         if self.drawgameover and game.justPressed.a then
-            game:switchState("menu")
+            if not self.quitAfterPlaying then
+                game:switchState("menu")
+            else
+                love.event.quit()
+            end
         end
         if game.gameOver and not self.drawgameover and game.keys.a then
             self.gameoverspeed = 3
@@ -97,13 +97,13 @@ return {
                     game.timeStart = love.timer.getTime()
                     game.playing = true
                     local now = os.time(os.date("*t"))
-                    local pt = {
-                        details = modes[self.rpArg[1]].name,
-                        state = rotations[self.rpArg[2]].name,
-                        startTimestamp = now,
-                        largeImageKey = "gameplay"
-                    }
-                    updatePresence(pt)
+                    -- local pt = {
+                    --     details = modes[self.rpArg[1]].name,
+                    --     state = rotations[self.rpArg[2]].name,
+                    --     startTimestamp = now,
+                    --     largeImageKey = "gameplay"
+                    -- }
+                    -- updatePresence(pt)
                     self:playBGM(game.bgm[1])
                 elseif self.readyGoStage == 2 then
                     self.readyGoText = "Go!"
@@ -248,7 +248,10 @@ return {
         local timer = game.timer - game.timeStart
         local timeText = string.format("%02d:%02d.%02d", math.abs(math.floor(timer/60)), math.floor(timer%60), math.floor((timer*100)%100))
         local fw = game.font.med2:getWidth(timeText)
+        local rt = 'REPLAY MODE'
+        local rw = game.font.med2:getWidth(rt)
         love.graphics.print(timeText, (window.w/2)-(fw/2), (window.h-ty)+200)
+        love.graphics.print(rt, (window.w/2)-(rw/2), (window.h-ty)+225)
 
         if self.drawingReadyGo then
             love.graphics.setFont(game.font.med2)

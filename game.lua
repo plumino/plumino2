@@ -6,6 +6,8 @@ game.states = {}
 game.mode = {}
 
 function game:loadMode(name, rotation)
+    print('loadMode()')
+    self.replayMode = false
     if not modes[name] then
         error("Mode "..name.." does not exist! This should never ever happen!")
     end
@@ -13,7 +15,28 @@ function game:loadMode(name, rotation)
         error("Rotation "..rotation.." does not exist! This should never ever happen!")
     end
     self.mode = modes[name]
+    self.modeID = name
     self:init(rotation, {})
+    self.mode:init()
+end
+
+function game:loadReplay(file)
+    print(file)
+    print('loadReplay()')
+    local stuff, len = love.filesystem.read(file)
+    if not stuff then error('Replay file '..file..' could not be read!') end
+    local data = json.decode(stuff)
+    local name, rotation = data[3], data[2]
+    self.replayMode = true
+    if not modes[name] then
+        error("Mode "..name.." does not exist! This should never ever happen!")
+    end
+    if not rotations[rotation] then
+        error("Rotation "..rotation.." does not exist! This should never ever happen!")
+    end
+    self.mode = modes[name]
+    self.modeID = name
+    self:init(rotation, {replay=data})
     self.mode:init()
 end
 
@@ -90,10 +113,28 @@ function game:init(rotation, options)
 
     self.currentBackground = 1
 
+    if options.replay then
+        self.replayData = options.replay
+    else
+        self.replayData = {}
+    end
+
+    self.replaysInitialised = false
     self.playAudio = true
+    game.replayRecData = {}
+    game.currentFrame = 0
+    game.replayInputIndex = 1
+    if self.replayMode then
+        self.keys = deepcopy(self.keysInactive)
+        self.rngSeed = self.replayData[1]
+    else
+        self.rngSeed = os.time()
+    end
+    love.math.setRandomSeed(self.rngSeed)
+    self.replaysInitialised = true
 
     self.timer = 0
-    self.willTrackTime = false
+    self.playing = false
     self.timeStart = 0
 
     self.rotsys = rotation
@@ -198,8 +239,8 @@ function game:init(rotation, options)
 end
 
 function game:update()
-    if self.gameOver and self.willTrackTime then
-        self.willTrackTime = false
+    if self.gameOver and self.playing then
+        self.playing = false
         if self.currentbgm ~= nil then
             self.currentbgm:stop()
         end
@@ -209,7 +250,7 @@ function game:update()
         self.invisible = false
     end
 
-    if self.willTrackTime then
+    if self.playing then
         if not self.pausetimer then
             self.timer = love.timer.getTime()
         end
@@ -232,37 +273,63 @@ function game:update()
     if self.mode.update then
         self.mode:update()
     end
+
+    if self.playing then
+        self.currentFrame = self.currentFrame + 1
+    end
+end
+
+function game:updateReplayKeys()
+    if not self.replaysInitialised then return end
+    local p = self.replayData[4][self.replayInputIndex]
+    if p == nil then
+        return
+    end
+    if p[1] <= self.currentFrame then
+        print('advancing '..self.replayInputIndex)
+        print(inspect(p))
+        self.replayInputIndex = self.replayInputIndex + 1
+        if p[2] == 'keyDown' then
+            self.keys[p[3]] = true
+        end
+        if p[2] == 'keyUp' then
+            self.keys[p[3]] = false
+        end
+        --self:checkJustPressed()
+    end
 end
 
 --[[ INPUT HANDLING ]]--
 
-function game:keyDown(key, sc, rep)
-    local y = nil
+function game:replayKeyDown(k, sc, r)
+    if self.replayMode or self.gameOver then return end
+    local reverseKeys = {}
     for i, j in pairs(self.keyMap) do
-        if key == j then
-            y = i
-        end
+        reverseKeys[j] = i
     end
-    if not y then return end -- unrecognised key
-    if self.keys[y] ~= nil then
-        self.keys[y] = true
+    if self.playing then
+        local data = {self.currentFrame, 'keyDown', reverseKeys[k]}
+        print(inspect(data))
+        table.insert(self.replayRecData, data)
     end
 end
-
-function game:keyUp(key, sc)
-    local y = nil
+function game:replayKeyUp(k, sc)
+    if self.replayMode or self.gameOver then return end
+    local reverseKeys = {}
     for i, j in pairs(self.keyMap) do
-        if key == j then
-            y = i
-        end
+        reverseKeys[j] = i
     end
-    if not y then return end -- unrecognised key
-    if self.keys[y] ~= nil then
-        self.keys[y] = false
+    if self.playing then
+        local data = {self.currentFrame, 'keyUp', reverseKeys[k]}
+        print(inspect(data))
+        table.insert(self.replayRecData, data)
     end
 end
 
 function game:updateKeys()
+    if self.replayMode and not self.gameOver then
+        return
+    end
     for i, j in pairs(game.keyMap) do
         game.keys[i] = love.keyboard.isDown(j)
     end
@@ -370,9 +437,18 @@ function game:next(dontRotate)
         for x = 1, #self.piece.type[self.piece.state], 1 do
             if (self.matrix[self.piecey+y] or {false, false, false, false})[self.piecex+x] ~= false and self.piece.type[self.piece.state][y][x] == 1 then
                 self.gameOver = true
+                self.playing = false
+                print('-- PLAYER DIED; SAVING REPLAY --')
+                if not self.replayMode then
+                    love.filesystem.write('_last.prv', json.encode({self.rngSeed, self.rotsys, self.modeID, self.replayRecData}))
+                end
                 return
             end
         end
+    end
+
+    if self.mode.onNext then
+        self.mode:onNext()
     end
 
     self.piece.active = true
@@ -422,7 +498,7 @@ function game:doRotation(b1, b2, isARE)
 end
 
 function game:doInput()
-    if self.willTrackTime then
+    if self.playing then
         if self.justPressed.left and not self:isColliding(nil, self.piecex-1) then
             self.piecex = self.piecex - 1
         end
@@ -454,7 +530,7 @@ function game:doHold() -- oh boy i'm really doing this
 end
 
 function game:doAltInput()
-    if self.willTrackTime then
+    if self.playing then
         if rotations[self.rotsys].doInput then
             rotations[self.rotsys]:doInput()
         end
