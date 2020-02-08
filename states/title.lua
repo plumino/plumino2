@@ -62,7 +62,9 @@ return {
         end
     end,
     draw = function(self)
-        love.graphics.clear(0.1, 0.1, 0.1)
+        love.graphics.setColor(0.1,0.1,0.1)
+        love.graphics.rectangle('fill',0,0,window.w,window.h)
+        love.graphics.setColor(1,1,1,1)
         love.graphics.setFont(game.font.med2)
 
         love.graphics.setColor(1, 1, 1, self.logoalpha/100)

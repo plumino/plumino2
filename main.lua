@@ -45,15 +45,19 @@ pluginNames = {
 }
 -- you know the drill
 
-fragShaderNames = {
-    "f_bw",
-    "f_nop",
-    "f_hell",
-    "f_wip"
+CLEAR_SHADER_ON_DRAW = false
+
+autoShaderDefs = {
+    {'frag', 'f_bw'},
+    {'frag', 'f_nop'},
+    {'frag', 'f_hell'},
+    {'frag', 'f_yes'},
+    {'frag', 'f_pixel'},
+    {'vert', 'v_yes'}
 }
 
-vertShaderNames = {
-    "v_yes"
+manualShaderDefs = {
+    wibbry = {'frag/f_yes.frag', 'vert/v_yes.vert'}
 }
 
 piece = {}
@@ -151,11 +155,14 @@ modes = {}
 plugins = {}
 rotations = {}
 randomiser = {}
-fragShaders = {}
-vertShaders = {}
+shaders = {}
 currentShader = nil
 local shaderTimeStart = love.timer.getTime()
 shaderTime = 0
+
+game.config = {
+    currentShader = nil
+}
 
 game.sfx = {
     ready = "ready.wav",
@@ -219,18 +226,14 @@ function game:switchState(name, args)
     love.window.setTitle("Plumino²: "..name)
 end
 
-function game:setFragShader(name)
-    if not fragShaders[name] then
+function game:setShader(name)
+    if name == nil then
+        currentShader = nil
+        return
+    end
+    if not shaders[name] then
         error('Cannot find shader '..name)
     end
-    love.graphics.setShader(fragShaders[name])
-    currentShader = name
-end
-function game:setVertShader(name)
-    if not vertShaders[name] then
-        error('Cannot find shader '..name)
-    end
-    love.graphics.setShader(vertShaders[name])
     currentShader = name
 end
 
@@ -296,11 +299,11 @@ function love.load(args)
         require("./randomiser/"..i)
     end
     
-    for _, i in pairs(fragShaderNames) do -- handle shader loading
-        fragShaders[i] = love.graphics.newShader('frag/'..i..'.frag')
+    for _, i in pairs(autoShaderDefs) do -- handle shader loading
+        shaders[i[2]] = love.graphics.newShader(i[1]..'/'..i[2]..'.'..i[1])
     end
-    for _, i in pairs(vertShaderNames) do -- handle shader loading
-        vertShaders[i] = love.graphics.newShader('vert/'..i..'.vert')
+    for i, j in pairs(manualShaderDefs) do
+        shaders[i] = love.graphics.newShader(unpack(j))
     end
     
     for _, i in pairs(pluginNames) do
@@ -342,6 +345,14 @@ function love.load(args)
             local t = json.decode(p)
             game.controllerMap = deepcopy(t)
         end
+
+        local n, m = love.filesystem.read('config.json')
+        if n == nil then
+            print('Config load failed. Ignoring.')
+        else
+            local t = json.decode(n)
+            game.config = t
+        end
     end
 
     if logitech then
@@ -362,16 +373,13 @@ function love.load(args)
         game:switchState("splash")
     end
 
-    --game:setVertShader('v_yes')
+    game:setShader(game.config.currentShader)
 end
 
 function love.update(dt)
     shaderTime = love.timer.getTime() - shaderTimeStart
-    if fragShaders[currentShader] and fragShaders[currentShader]:hasUniform('time') then
-        fragShaders[currentShader]:send('time', shaderTime)
-    end
-    if vertShaders[currentShader] and vertShaders[currentShader]:hasUniform('time') then
-        vertShaders[currentShader]:send('time', shaderTime)
+    if shaders[currentShader] and shaders[currentShader]:hasUniform('time') then
+        shaders[currentShader]:send('time', shaderTime)
     end
 
     local lightMessage = love.thread.getChannel('lights'):pop()
@@ -424,7 +432,9 @@ if discord then
 end
 
 function love.draw()
-    love.graphics.setShader()
+    if CLEAR_SHADER_ON_DRAW then
+        love.graphics.setShader()
+    end
     love.graphics.setCanvas(screen)
     love.graphics.clear()
     love.graphics.setBlendMode("alpha")
@@ -437,11 +447,8 @@ function love.draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()).."/"..MAX_FPS.." FPS", 0, 0)
 
-    if vertShaders[currentShader] then
-        love.graphics.setShader(vertShaders[currentShader])
-    end
-    if fragShaders[currentShader] then
-        love.graphics.setShader(fragShaders[currentShader])
+    if shaders[currentShader] then
+        love.graphics.setShader(shaders[currentShader])
     end
     love.graphics.setCanvas()
     love.graphics.setColor(unpack(screenCol))
