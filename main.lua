@@ -45,6 +45,17 @@ pluginNames = {
 }
 -- you know the drill
 
+fragShaderNames = {
+    "f_bw",
+    "f_nop",
+    "f_hell",
+    "f_wip"
+}
+
+vertShaderNames = {
+    "v_yes"
+}
+
 piece = {}
 
 json = require "lib/json"
@@ -140,6 +151,11 @@ modes = {}
 plugins = {}
 rotations = {}
 randomiser = {}
+fragShaders = {}
+vertShaders = {}
+currentShader = nil
+local shaderTimeStart = love.timer.getTime()
+shaderTime = 0
 
 game.sfx = {
     ready = "ready.wav",
@@ -201,6 +217,21 @@ function game:switchState(name, args)
     screenCol = {1, 1, 1, 1}
 
     love.window.setTitle("Plumino²: "..name)
+end
+
+function game:setFragShader(name)
+    if not fragShaders[name] then
+        error('Cannot find shader '..name)
+    end
+    love.graphics.setShader(fragShaders[name])
+    currentShader = name
+end
+function game:setVertShader(name)
+    if not vertShaders[name] then
+        error('Cannot find shader '..name)
+    end
+    love.graphics.setShader(vertShaders[name])
+    currentShader = name
 end
 
 local files = {
@@ -265,6 +296,13 @@ function love.load(args)
         require("./randomiser/"..i)
     end
     
+    for _, i in pairs(fragShaderNames) do -- handle shader loading
+        fragShaders[i] = love.graphics.newShader('frag/'..i..'.frag')
+    end
+    for _, i in pairs(vertShaderNames) do -- handle shader loading
+        vertShaders[i] = love.graphics.newShader('vert/'..i..'.vert')
+    end
+    
     for _, i in pairs(pluginNames) do
         plugins[i] = require('./plugins/'..i)
         plugins[i].enabled = false
@@ -323,9 +361,19 @@ function love.load(args)
     else
         game:switchState("splash")
     end
+
+    --game:setVertShader('v_yes')
 end
 
 function love.update(dt)
+    shaderTime = love.timer.getTime() - shaderTimeStart
+    if fragShaders[currentShader] and fragShaders[currentShader]:hasUniform('time') then
+        fragShaders[currentShader]:send('time', shaderTime)
+    end
+    if vertShaders[currentShader] and vertShaders[currentShader]:hasUniform('time') then
+        vertShaders[currentShader]:send('time', shaderTime)
+    end
+
     local lightMessage = love.thread.getChannel('lights'):pop()
     if lightMessage and logitech then
         logitech.setLightingForKey(unpack(lightMessage))
@@ -376,6 +424,7 @@ if discord then
 end
 
 function love.draw()
+    love.graphics.setShader()
     love.graphics.setCanvas(screen)
     love.graphics.clear()
     love.graphics.setBlendMode("alpha")
@@ -388,6 +437,12 @@ function love.draw()
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print(tostring(love.timer.getFPS()).."/"..MAX_FPS.." FPS", 0, 0)
 
+    if vertShaders[currentShader] then
+        love.graphics.setShader(vertShaders[currentShader])
+    end
+    if fragShaders[currentShader] then
+        love.graphics.setShader(fragShaders[currentShader])
+    end
     love.graphics.setCanvas()
     love.graphics.setColor(unpack(screenCol))
     love.graphics.setBlendMode("alpha", "premultiplied")

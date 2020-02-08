@@ -121,9 +121,9 @@ return {
     end,
     draw = function(self)
         if game.background[game.currentBackground] then
-            love.graphics.setColor(0.6, 0.6, 0.6, 1)
+            love.graphics.setColor(0.4, 0.4, 0.4, 1)
             local quad = love.graphics.newQuad(0, 0, window.w, window.h, 800, 600) -- VERY NASTY HACK
-            love.graphics.draw(game.background[game.currentBackground], 0, 0, 0, window.w/800, window.h/600)
+            love.graphics.draw(game.background[game.currentBackground], 0, 0, 0, window.w/800, window.h/600) -- what the fuck
         end
 
         local minoDim = 16
