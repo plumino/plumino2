@@ -53,7 +53,10 @@ autoShaderDefs = {
     {'frag', 'f_hell'},
     {'frag', 'f_yes'},
     {'frag', 'f_pixel'},
-    {'vert', 'v_yes'}
+    {'frag', 'f_yesno'},
+    {'vert', 'v_yes'},
+    {'vert', 'v_nop'},
+    {'vert', 'v_tan'}
 }
 
 manualShaderDefs = {

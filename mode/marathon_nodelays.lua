@@ -1,5 +1,5 @@
 return {
-    name = "Marathon",
+    name = "Marathon (no delays)",
     init = function(self)
         self.level = 0
 
@@ -39,7 +39,7 @@ return {
         end
     end,
     draw = function(self)
-        ui.drawScoreText("Marathon", 0)
+        ui.drawScoreText("Marathon (no delays)", 0)
 
         ui.drawScoreText("Lines", 2)
         ui.drawScoreText(tostring(game.stats.lines) .. "/" .. tostring((self.level+1) * 10), 3)
