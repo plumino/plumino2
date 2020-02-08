@@ -121,6 +121,7 @@ function game:init(rotation, options)
 
     self.replaysInitialised = false
     self.playAudio = true
+    self.allowHardDrop = true
     game.replayRecData = {}
     game.currentFrame = 0
     game.replayInputIndex = 1
@@ -656,7 +657,7 @@ function game:doGravity()
     if self.keys.down then
         grav = 1 + self.speeds.gravity
     end
-    if self.keys.up and not self.upLock then
+    if self.keys.up and not self.upLock and self.allowHardDrop then
         self.piecey = self:getGhostPosition() -- haha yes
         self.upLock = true
     end

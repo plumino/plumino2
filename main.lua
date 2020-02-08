@@ -17,7 +17,8 @@ modeNames = {
     "sinemarathon",
     "testmode",
     "squirrel",
-    "marathon_nodelays"
+    "marathon_nodelays",
+    "beat"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 
