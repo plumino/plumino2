@@ -99,7 +99,7 @@ return {
             end
             if self.section > #self.speedcurve then
                 game.won = true
-                game.gameOver = true
+                game:killPlayer()
             else
                 game.speeds.gravity = self.speedcurve[self.section][1]
                 game.speeds.are = self.speedcurve[self.section][2]

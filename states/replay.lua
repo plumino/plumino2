@@ -251,7 +251,9 @@ return {
         local rt = 'REPLAY MODE'
         local rw = game.font.med2:getWidth(rt)
         love.graphics.print(timeText, (window.w/2)-(fw/2), (window.h-ty)+200)
+        love.graphics.setColor(1,1,1,math.abs(math.sin(love.timer.getTime()*2)))
         love.graphics.print(rt, (window.w/2)-(rw/2), (window.h-ty)+225)
+        love.graphics.setColor(1,1,1,1)
 
         if self.drawingReadyGo then
             love.graphics.setFont(game.font.med2)

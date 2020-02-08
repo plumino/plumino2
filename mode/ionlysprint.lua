@@ -18,7 +18,7 @@ return {
         if lines > 0 then
             if game.stats.lines >= self.endcount then
                 game.won = true
-                game.gameOver = true
+                game:killPlayer()
             end
         end
     end,

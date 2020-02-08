@@ -1,4 +1,4 @@
-PLUMINO_VERSION = {9, 0}
+PLUMINO_VERSION = {9, 1}
 PLUMINO_VERSION_CODENAME = 'Replay Update'
 
 PLUMINO_DEV_BUILD = false
@@ -16,7 +16,8 @@ modeNames = {
     "ionlysprint",
     "sinemarathon",
     "testmode",
-    "squirrel"
+    "squirrel",
+    "marathon_nodelays"
 }
 -- EDIT THIS TABLE TO LOAD MORE MODES.
 

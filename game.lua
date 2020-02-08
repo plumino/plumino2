@@ -26,7 +26,7 @@ function game:loadReplay(file)
     local stuff, len = love.filesystem.read(file)
     if not stuff then error('Replay file '..file..' could not be read!') end
     local data = json.decode(stuff)
-    local name, rotation = data[3], data[2]
+    local name, rotation = data.mode, data.rot
     self.replayMode = true
     if not modes[name] then
         error("Mode "..name.." does not exist! This should never ever happen!")
@@ -126,7 +126,7 @@ function game:init(rotation, options)
     game.replayInputIndex = 1
     if self.replayMode then
         self.keys = deepcopy(self.keysInactive)
-        self.rngSeed = self.replayData[1]
+        self.rngSeed = self.replayData.seed
     else
         self.rngSeed = os.time()
     end
@@ -281,19 +281,21 @@ end
 
 function game:updateReplayKeys()
     if not self.replaysInitialised then return end
-    local p = self.replayData[4][self.replayInputIndex]
+    local th = self.replayData.data
+    table.sort(th, function(a, b) return a.frame < b.frame end)
+    local p = th[self.replayInputIndex]
     if p == nil then
         return
     end
-    if p[1] <= self.currentFrame then
+    if p.frame <= self.currentFrame then
         print('advancing '..self.replayInputIndex)
         print(inspect(p))
         self.replayInputIndex = self.replayInputIndex + 1
-        if p[2] == 'keyDown' then
-            self.keys[p[3]] = true
+        if p.eventType == 'keyDown' and p.key then
+            self.keys[p.key] = true
         end
-        if p[2] == 'keyUp' then
-            self.keys[p[3]] = false
+        if p.eventType == 'keyUp' and p.key then
+            self.keys[p.key] = false
         end
         --self:checkJustPressed()
     end
@@ -308,7 +310,7 @@ function game:replayKeyDown(k, sc, r)
         reverseKeys[j] = i
     end
     if self.playing then
-        local data = {self.currentFrame, 'keyDown', reverseKeys[k]}
+        local data = {frame=self.currentFrame, eventType='keyDown', key=reverseKeys[k]}
         print(inspect(data))
         table.insert(self.replayRecData, data)
     end
@@ -320,7 +322,7 @@ function game:replayKeyUp(k, sc)
         reverseKeys[j] = i
     end
     if self.playing then
-        local data = {self.currentFrame, 'keyUp', reverseKeys[k]}
+        local data = {frame=self.currentFrame, eventType='keyUp', key=reverseKeys[k]}
         print(inspect(data))
         table.insert(self.replayRecData, data)
     end
@@ -417,6 +419,19 @@ function game:movePiece(x, y)
     end
 end
 
+function game:saveReplay(filename)
+    return love.filesystem.write(filename, json.encode({seed=self.rngSeed, rot=self.rotsys, mode=self.modeID, data=self.replayRecData}))
+end
+
+function game:killPlayer()
+    self.playing = false
+    self.gameOver = true
+    if not self.replayMode then
+        print('- saving replay -')
+        self:saveReplay('_last.prv')
+    end
+end
+
 function game:next(dontRotate)
     if self.are > 0 then return end
 
@@ -436,12 +451,7 @@ function game:next(dontRotate)
     for y = 1, #self.piece.type[self.piece.state], 1 do
         for x = 1, #self.piece.type[self.piece.state], 1 do
             if (self.matrix[self.piecey+y] or {false, false, false, false})[self.piecex+x] ~= false and self.piece.type[self.piece.state][y][x] == 1 then
-                self.gameOver = true
-                self.playing = false
-                print('-- PLAYER DIED; SAVING REPLAY --')
-                if not self.replayMode then
-                    love.filesystem.write('_last.prv', json.encode({self.rngSeed, self.rotsys, self.modeID, self.replayRecData}))
-                end
+                self:killPlayer()
                 return
             end
         end
