@@ -7,8 +7,6 @@ vec4 effect( vec4 color, Image tex, vec2 texture_coords, vec2 screen_coords )
 {
     vec4 texcolor = Texel(tex, texture_coords);
     float h = (texcolor.x + texcolor.y + texcolor.z) / 3.0f;
-    texcolor.x = h;
-    texcolor.y = h;
-    texcolor.z = h;
+    texcolor.xyz = vec3(h);
     return texcolor * color;
 }
