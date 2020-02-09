@@ -538,6 +538,7 @@ function game:doHold() -- oh boy i'm really doing this
     local h = self.heldPiece
     self.heldPiece = self.piece.name
     self.piece = self:buildPiece(h)
+    self.piecex, self.piecey = rotations[self.rotsys]:getSpawnLocation()
 end
 
 function game:doAltInput()
